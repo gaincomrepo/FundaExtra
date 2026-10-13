@@ -3,287 +3,660 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0C5C6E">
+<meta name="theme-color" content="#F7A100">
 <meta name="robots" content="noindex,nofollow">
-<title>Woningen</title>
+<title>Funda Frank</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,700&display=swap">
 <style>
 :root{
-  --bg:#F3F5F1; --surface:#FFFFFF; --sunken:#E9EDE7; --ink:#15201C; --muted:#5A6962; --line:#D8DFD8;
-  --accent:#0C5C6E; --accent-ink:#FFFFFF; --accent-soft:#DDECEF;
-  --top:#1B7447; --sterk:#3C7F8C; --kans:#A9781A; --zwak:#7C8782;
-  --warn:#A85410; --warn-soft:#F6E6D6; --bad:#9E2F2A; --bad-soft:#F5DEDC; --good-soft:#DCEEE3;
-  --display:"Bricolage Grotesque","IBM Plex Sans",system-ui,sans-serif;
-  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  --r:14px; color-scheme:light;
+  --or:#F7A100; --or-d:#E08F00; --blauw:#0071B3; --blauw-d:#005A8F; --ink:#1A1A1A; --tekst:#333; --grijs:#666; --licht:#999;
+  --lijn:#E6E6E6; --vlak:#F7F7F7; --wit:#fff; --hero1:#E9F4FB; --groen:#1D9B3D; --rood:#D0021B; --info:#EAF4FB;
+  --top:#1B7447; --sterk:#0071B3; --kans:#B8730A; --zwak:#777;
+  --font:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --r:6px;
 }
-@media (prefers-color-scheme: dark){ :root{
-  --bg:#0E1412; --surface:#161F1C; --sunken:#1D2824; --ink:#E4EBE7; --muted:#98A7A0; --line:#2B3733;
-  --accent:#6CC6D6; --accent-ink:#06262D; --accent-soft:#16343A;
-  --top:#4FBE86; --sterk:#6FB7C4; --kans:#D9A441; --zwak:#8E9A95;
-  --warn:#E39A52; --warn-soft:#3A2A1A; --bad:#E5807A; --bad-soft:#3B201E; --good-soft:#18352A; color-scheme:dark } }
 *{box-sizing:border-box}
-[hidden]{display:none!important}
 html,body{margin:0}
-body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45;font-variant-numeric:tabular-nums;-webkit-tap-highlight-color:transparent}
-a{color:var(--accent)}
+body{font-family:var(--font);color:var(--tekst);background:var(--wit);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+a{color:var(--blauw);text-decoration:none}
+a:hover{text-decoration:underline}
 button,input,select{font:inherit;color:inherit}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+img{display:block}
+[hidden]{display:none!important}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
 
-/* Kop en tabbladen: plakken bovenaan, duim-vriendelijk */
-.top{position:sticky;top:0;z-index:10;background:var(--bg);padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 0;border-bottom:1px solid var(--line)}
-.kop{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
-h1{font-family:var(--display);font-weight:700;font-size:24px;letter-spacing:-.02em;margin:0}
-.bij{font-size:12.5px;color:var(--muted);white-space:nowrap}
-.tabs{display:flex;gap:4px;margin:10px -16px 0;padding:0 16px;overflow-x:auto;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tab{flex:none;border:0;background:none;padding:10px 12px 11px;font-weight:600;font-size:14.5px;color:var(--muted);border-bottom:3px solid transparent;cursor:pointer}
-.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
-.tab b{display:inline-block;min-width:20px;padding:0 6px;margin-left:5px;border-radius:999px;background:var(--sunken);color:var(--muted);font-size:12px;line-height:19px;text-align:center}
-.tab[aria-selected="true"] b{background:var(--accent);color:var(--accent-ink)}
-.zoekrij{display:flex;gap:8px;padding:10px 0 12px}
-.zoekrij input{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:9px 11px}
-.zoekrij select{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:9px 8px;max-width:44%}
+/* Kopbalk in Funda-oranje */
+.top{background:var(--or);color:#fff;position:sticky;top:0;z-index:20;padding-top:env(safe-area-inset-top,0px)}
+.top .wrap{display:flex;align-items:center;gap:22px;height:52px}
+.logo{display:flex;align-items:center;gap:8px;color:#fff;font-weight:700;text-decoration:none}
+.logo:hover{text-decoration:none}
+.logo .f{background:#fff;color:var(--or);font-style:italic;font-weight:800;font-size:19px;letter-spacing:-.02em;padding:2px 9px 4px;border-radius:4px;transform:skewX(-6deg);display:inline-block;line-height:1.1}
+.logo .fr{font-size:18px;font-weight:700;letter-spacing:.01em}
+.nav{display:flex;gap:18px;font-size:14px;font-weight:600}
+.nav a{color:#fff;opacity:.95;padding:6px 0;border-bottom:2px solid transparent}
+.nav a:hover{text-decoration:none;opacity:1}
+.nav a.aan{border-bottom-color:#fff}
+.nav a b{background:rgba(255,255,255,.25);border-radius:999px;padding:0 6px;font-size:12px;margin-left:4px}
+.rechts{margin-left:auto;display:flex;gap:16px;font-size:14px;font-weight:600;align-items:center}
+.rechts a{color:#fff;display:flex;align-items:center;gap:5px}
+.rechts a:hover{text-decoration:none}
+.ico{width:18px;height:18px;flex:none}
+@media (max-width:720px){ .nav{display:none} .rechts .tekst{display:none} }
 
-main{padding:14px 16px calc(env(safe-area-inset-bottom,0px) + 40px);max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
-.uitleg{margin:0;color:var(--muted);font-size:13.5px}
-.leeg{background:var(--surface);border:1px dashed var(--line);border-radius:var(--r);padding:28px 18px;text-align:center;color:var(--muted)}
+/* Mobiele tabbalk onderaan */
+.tabbalk{display:none;position:fixed;left:0;right:0;bottom:0;z-index:20;background:#fff;border-top:1px solid var(--lijn);padding-bottom:env(safe-area-inset-bottom,0px)}
+.tabbalk a{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 0 6px;font-size:11px;font-weight:600;color:var(--grijs)}
+.tabbalk a.aan{color:var(--or)}
+.tabbalk a:hover{text-decoration:none}
+.tabbalk .ico{width:22px;height:22px}
+@media (max-width:720px){ .tabbalk{display:flex} body{padding-bottom:64px} }
 
-/* Kaart per woning */
-.huis{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
-.huis.weg{opacity:.6}
-.beeld{position:relative;aspect-ratio:3/2;background:var(--sunken)}
-.strook{display:flex;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
-.strook::-webkit-scrollbar{display:none}
-.dia{flex:0 0 100%;height:100%;scroll-snap-align:start;position:relative;overflow:hidden}
-.dia img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-.dia .speld{position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;border:3px solid #fff;background:#E5484D;box-shadow:0 0 0 1px rgba(0,0,0,.35)}
-.dia .bijschrift{position:absolute;left:10px;bottom:10px;background:rgba(10,16,14,.72);color:#fff;font-size:12px;padding:3px 8px;border-radius:6px}
-.geenfoto{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:13px}
-.stippen{position:absolute;right:10px;bottom:12px;display:flex;gap:5px}
-.stippen i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.55);box-shadow:0 0 0 1px rgba(0,0,0,.25)}
-.stippen i.aan{background:#fff}
-.score{position:absolute;left:10px;top:10px;min-width:52px;padding:5px 9px;border-radius:10px;background:var(--b);color:#fff;font-family:var(--display);font-weight:700;font-size:22px;line-height:1;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.25)}
-.score small{display:block;font-family:var(--body);font-size:10px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-top:3px;opacity:.92}
-.score.voorlopig{background:rgba(10,16,14,.72);border:2px dashed var(--b)}
-.lint{position:absolute;right:10px;top:10px;display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
-.lint span{font-size:11.5px;font-weight:600;padding:3px 8px;border-radius:6px;background:#fff;color:#15201C}
-.lint .nieuw{background:#0C5C6E;color:#fff}
-.lint .bod{background:#F6E6D6;color:#8A4510}
-.lint .daal{background:#DCEEE3;color:#1B7447}
+/* Startpagina */
+.hero{background:linear-gradient(180deg,var(--hero1) 0%,#fff 100%);padding:28px 0 8px}
+.hero .wrap{max-width:720px}
+.hero h1{font-size:26px;font-weight:700;color:var(--ink);margin:0 0 4px;text-align:center}
+.hero p{text-align:center;color:var(--grijs);margin:0 0 18px;font-size:14.5px}
+.zoekkaart{background:#fff;border:1px solid var(--lijn);border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.06);padding:0 20px 20px}
+.ztabs{display:flex;justify-content:center;gap:4px;border-bottom:1px solid var(--lijn);margin-bottom:18px}
+.ztabs a{padding:14px 16px 11px;font-size:14px;font-weight:600;color:var(--grijs);border-bottom:3px solid transparent}
+.ztabs a.aan{color:var(--ink);border-bottom-color:var(--or)}
+.ztabs a:hover{text-decoration:none;color:var(--ink)}
+.zoekrij{display:flex;gap:10px;align-items:center}
+.zoekveld{flex:1;display:flex;border:1px solid #CFCFCF;border-radius:6px;overflow:hidden}
+.zoekveld input{flex:1;border:0;padding:11px 14px;font-size:15px;min-width:0;outline:none}
+.zoekveld button{border:0;background:var(--or);color:#fff;width:46px;cursor:pointer;display:grid;place-items:center}
+.zoekrij .kaartlink{white-space:nowrap;font-weight:600;font-size:14px;display:flex;gap:6px;align-items:center}
+@media (max-width:560px){ .zoekrij{flex-wrap:wrap} .zoekrij .kaartlink{width:100%;justify-content:center} }
+.tegels{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:22px 0 6px}
+.tegel{border:1px solid var(--lijn);border-radius:8px;padding:14px 16px;display:flex;align-items:center;gap:12px;font-weight:600;font-size:14.5px;color:var(--blauw);background:#fff}
+.tegel .ico{width:30px;height:30px;color:var(--or)}
+.tegel:hover{text-decoration:none;border-color:#cfcfcf}
+.tegel small{display:block;font-weight:400;color:var(--grijs);font-size:12.5px}
+@media (max-width:720px){ .tegels{grid-template-columns:1fr;gap:10px} }
+h2.sectie{font-size:22px;font-weight:700;color:var(--ink);margin:34px 0 14px}
+h2.sectie small{font-size:14px;font-weight:400;color:var(--grijs);margin-left:10px}
+.beeldgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:900px){ .beeldgrid{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:560px){ .beeldgrid{grid-template-columns:1fr} }
+.bkaart{border:1px solid var(--lijn);border-radius:8px;overflow:hidden;background:#fff;color:var(--tekst);display:block;position:relative}
+.bkaart:hover{text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.bkaart .foto{aspect-ratio:3/2;background:var(--vlak);position:relative;overflow:hidden}
+.bkaart .foto img{width:100%;height:100%;object-fit:cover}
+.bkaart .inh{padding:12px 14px 14px}
+.bkaart .prijs{font-weight:700;font-size:17px;color:var(--ink)}
+.bkaart .adr{color:var(--blauw);font-weight:600;margin-top:2px}
+.bkaart .pl{color:var(--grijs);font-size:13.5px}
+.bkaart .spec{color:var(--grijs);font-size:13px;margin-top:6px}
+
+/* Score-chip en labels op foto's */
+.chip{position:absolute;left:10px;top:10px;background:var(--b,#333);color:#fff;font-weight:700;font-size:15px;padding:4px 9px;border-radius:6px;display:flex;align-items:baseline;gap:5px;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.chip small{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;opacity:.95}
+.chip.voorlopig{background:rgba(30,30,30,.72);border:1.5px dashed rgba(255,255,255,.8)}
 .b-top{--b:var(--top)} .b-sterk{--b:var(--sterk)} .b-kans{--b:var(--kans)} .b-zwak{--b:var(--zwak)}
+.hart{position:absolute;right:10px;top:10px;width:34px;height:34px;border-radius:50%;background:#fff;border:1px solid var(--lijn);display:grid;place-items:center;cursor:pointer;color:var(--blauw);padding:0}
+.hart[aria-pressed="true"]{color:var(--rood)}
+.hart .ico{width:18px;height:18px}
+.etiket{position:absolute;left:10px;bottom:10px;display:flex;gap:5px;flex-wrap:wrap}
+.etiket span{background:#fff;color:var(--ink);font-size:11.5px;font-weight:700;padding:3px 7px;border-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.etiket .nieuw{background:var(--or);color:#fff}
+.etiket .bod{background:#FFF1DB;color:#8A4510}
+.etiket .daal{background:#DFF3E6;color:var(--top)}
+.etiket .weg{background:#444;color:#fff}
 
-.inh{padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px}
-.hoofd{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
-.adres{font-weight:600;font-size:16.5px;line-height:1.25;min-width:0}
-.adres small{display:block;font-weight:400;color:var(--muted);font-size:13.5px}
-.prijs{font-family:var(--display);font-weight:700;font-size:19px;white-space:nowrap;text-align:right}
-.prijs s{display:block;font-family:var(--body);font-weight:400;font-size:12.5px;color:var(--muted)}
-.feiten{display:flex;flex-wrap:wrap;gap:3px 14px;font-size:14px}
-.feiten b{font-weight:600}
-.feiten .zacht{color:var(--muted)}
-.sam{margin:0;font-size:14px}
-.pm{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:2px;font-size:13.5px}
-.pm li{padding-left:16px;position:relative}
-.pm li::before{position:absolute;left:0;font-weight:700}
-.pm .plus::before{content:"+";color:var(--top)}
-.pm .min::before{content:"–";color:var(--bad)}
-.pm .min.e1::before{color:var(--warn)}
-.acties{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:2px}
-.knop{display:flex;align-items:center;justify-content:center;gap:5px;min-height:40px;border:1px solid var(--line);background:var(--surface);border-radius:10px;font-size:13.5px;font-weight:500;text-decoration:none;color:var(--ink);cursor:pointer;padding:0 6px}
-.knop.hoofd{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
-.oordeel{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.knop[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:var(--accent-soft)}
-.knop.nee[aria-pressed="true"]{border-color:var(--bad);color:var(--bad);box-shadow:inset 0 0 0 1px var(--bad);background:var(--bad-soft)}
-.meer{border:0;background:none;color:var(--accent);padding:0;font-size:13.5px;cursor:pointer;text-align:left;width:max-content}
-.notitie{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:14px}
-.voet{font-size:12.5px;color:var(--muted);text-align:center}
-.laadmeer{align-self:center}
+/* Zoekresultaten */
+.resultaten{display:grid;grid-template-columns:270px minmax(0,1fr);gap:26px;padding:22px 0 40px;align-items:start}
+@media (max-width:900px){ .resultaten{grid-template-columns:1fr;gap:12px;padding-top:12px} }
+.filters{border:1px solid var(--lijn);border-radius:8px;padding:16px;position:sticky;top:64px;background:#fff}
+.filters h3{margin:0 0 10px;font-size:15px;color:var(--ink)}
+.filters .blok{border-top:1px solid var(--lijn);padding:12px 0}
+.filters .blok:last-child{padding-bottom:0}
+.filters label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--grijs)}
+.filters label b{color:var(--ink);font-weight:600;font-size:13.5px}
+.filters input[type=range]{width:100%;accent-color:var(--or)}
+.filters select,.filters input[type=search]{width:100%;border:1px solid #CFCFCF;border-radius:6px;padding:8px 10px;background:#fff}
+.keuze{display:flex;flex-direction:column;gap:6px}
+.keuze label{flex-direction:row;align-items:center;gap:8px;color:var(--tekst);font-size:14px;cursor:pointer}
+.keuze input{accent-color:var(--or);width:16px;height:16px}
+.filterknop{display:none;border:1px solid #CFCFCF;background:#fff;border-radius:6px;padding:9px 14px;font-weight:600;cursor:pointer;align-items:center;gap:8px}
+@media (max-width:900px){ .filterknop{display:inline-flex} .filters{display:none;position:static} .filters.open{display:block} }
+.lijstkop{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.lijstkop h1{font-size:20px;margin:0;color:var(--ink)}
+.lijstkop h1 small{font-weight:400;color:var(--grijs);font-size:14px;margin-left:8px}
+.sorteer{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--grijs)}
+.sorteer select{border:1px solid #CFCFCF;border-radius:6px;padding:7px 10px;background:#fff;font-weight:600;color:var(--ink)}
+.lijst{display:flex;flex-direction:column;gap:14px}
+.rkaart{border:1px solid var(--lijn);border-radius:8px;background:#fff;display:grid;grid-template-columns:300px minmax(0,1fr);overflow:hidden}
+.rkaart:hover{box-shadow:0 4px 18px rgba(0,0,0,.08)}
+.rkaart .foto{position:relative;background:var(--vlak);aspect-ratio:3/2;overflow:hidden}
+.rkaart .foto img{width:100%;height:100%;object-fit:cover}
+.rkaart .inh{padding:14px 18px 14px;display:flex;flex-direction:column;gap:5px;min-width:0}
+.rkaart .adr{font-size:18px;font-weight:700;color:var(--blauw);line-height:1.2}
+.rkaart .pl{color:var(--grijs);font-size:13.5px}
+.rkaart .prijs{font-size:18px;font-weight:700;color:var(--ink);margin-top:2px}
+.rkaart .prijs s{font-weight:400;font-size:13px;color:var(--licht);margin-left:8px}
+.rkaart .prijs small{font-weight:400;font-size:13px;color:var(--grijs)}
+.specs{display:flex;flex-wrap:wrap;gap:4px 14px;color:var(--tekst);font-size:14px;align-items:center}
+.specs span{display:inline-flex;align-items:center;gap:5px}
+.specs .ico{width:16px;height:16px;color:var(--grijs)}
+.lbl{display:inline-block;color:#fff;font-weight:700;font-size:12px;padding:1px 7px;border-radius:3px;background:#777;line-height:1.5}
+.lbl.A,.lbl.Ap{background:#1D9B3D} .lbl.B{background:#5BBF3A} .lbl.C{background:#C9D400;color:#333} .lbl.D{background:#F2C000;color:#333} .lbl.E{background:#F39200} .lbl.F{background:#E8501B} .lbl.G{background:#D0021B}
+.rkaart .sam{color:var(--tekst);font-size:14px;margin:2px 0 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.rkaart .mak{color:var(--grijs);font-size:13px;margin-top:auto;padding-top:6px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+.rkaart .acties{display:flex;gap:8px;flex-wrap:wrap}
+.knop{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid #CFCFCF;background:#fff;border-radius:6px;padding:8px 14px;font-size:14px;font-weight:600;color:var(--blauw);cursor:pointer;text-decoration:none;white-space:nowrap}
+.knop:hover{text-decoration:none;background:var(--vlak)}
+.knop.oranje{background:var(--or);border-color:var(--or);color:#fff}
+.knop.oranje:hover{background:var(--or-d)}
+.knop.klein{padding:5px 10px;font-size:13px}
+.knop[aria-pressed="true"]{border-color:var(--rood);color:var(--rood);background:#FFF3F3}
+.knop .ico{width:16px;height:16px}
+@media (max-width:720px){ .rkaart{grid-template-columns:1fr} .rkaart .inh{padding:12px 14px 14px} .rkaart .acties .tekstknop{display:none} }
+.meer{align-self:center;margin-top:8px}
+.leeg{border:1px dashed var(--lijn);border-radius:8px;padding:30px;text-align:center;color:var(--grijs)}
+.uitleg{color:var(--grijs);font-size:13.5px;margin:0 0 12px}
+
+/* Detailpagina */
+.kruimel{display:flex;gap:6px;font-size:13px;color:var(--grijs);padding:12px 0 10px;flex-wrap:wrap;align-items:center}
+.kruimel .ico{width:14px;height:14px}
+.galerij{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:4px;border-radius:8px;overflow:hidden;aspect-ratio:2.6/1;background:var(--vlak)}
+.galerij .g{position:relative;overflow:hidden;background:var(--vlak);cursor:pointer;border:0;padding:0}
+.galerij .g:first-child{grid-row:1/3}
+.galerij .g img{width:100%;height:100%;object-fit:cover}
+.galerij .g.lucht img.ov{position:absolute;inset:0}
+.galerij .g .bijschrift{position:absolute;left:8px;bottom:8px;background:rgba(0,0,0,.6);color:#fff;font-size:12px;padding:2px 7px;border-radius:4px}
+.galerij .g .speld{position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:#E5484D;border:2.5px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.3)}
+.galerij .g .meerfotos{position:absolute;inset:0;background:rgba(0,0,0,.45);color:#fff;display:grid;place-items:center;font-weight:700;font-size:18px}
+.galerij-wrap .knopbalk{position:absolute;right:12px;top:12px;display:flex;gap:8px}
+.galerij-wrap{position:relative}
+@media (max-width:720px){
+  .galerij{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;aspect-ratio:3/2;border-radius:0;margin:0 -16px;scrollbar-width:none;gap:0}
+  .galerij::-webkit-scrollbar{display:none}
+  .galerij .g{flex:0 0 100%;scroll-snap-align:start}
+  .galerij .g .meerfotos{display:none}
+}
+.mediabalk{display:flex;gap:22px;padding:12px 0;border-bottom:1px solid var(--lijn);font-size:14px;font-weight:600;flex-wrap:wrap}
+.mediabalk a,.mediabalk button{display:flex;align-items:center;gap:6px;color:var(--blauw);background:none;border:0;padding:0;cursor:pointer;font-weight:600}
+.mediabalk .ico{width:18px;height:18px}
+.detail{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:40px;padding:22px 0 50px;align-items:start}
+@media (max-width:900px){ .detail{grid-template-columns:1fr;gap:20px} }
+.detail h1{font-size:28px;margin:0;color:var(--ink);line-height:1.15}
+.detail .pl{color:var(--grijs);font-size:14.5px;margin-top:3px}
+.detail .prijs{font-size:20px;font-weight:700;color:var(--ink);margin:12px 0 4px}
+.detail .prijs small{font-weight:400;font-size:14px;color:var(--grijs)}
+.detail .prijs s{font-weight:400;font-size:14px;color:var(--licht);margin-left:8px}
+.detail .specs{margin:8px 0 14px}
+.infobox{background:var(--info);border-radius:6px;padding:10px 14px;font-size:14.5px;color:var(--ink);margin:10px 0 20px}
+.detail h2{font-size:20px;color:var(--ink);margin:26px 0 10px}
+.kort{display:flex;flex-direction:column;gap:12px;margin:0;padding:0;list-style:none}
+.kort li{display:flex;gap:12px;align-items:flex-start;padding-bottom:12px;border-bottom:1px solid var(--lijn)}
+.kort .ik{width:34px;height:34px;border-radius:6px;background:var(--info);display:grid;place-items:center;flex:none;color:var(--blauw)}
+.kort li.min .ik{background:#FFF1DB;color:#B8730A}
+.kort li.min.e3 .ik,.kort li.min.e2 .ik{background:#FBE7E6;color:var(--rood)}
+.kort .ik .ico{width:18px;height:18px}
+.kort b{display:block;color:var(--ink);font-weight:600}
+.kort span{color:var(--grijs);font-size:13.5px}
+.aibadge{display:flex;align-items:center;gap:6px;color:var(--grijs);font-size:13px;margin:-4px 0 12px}
+.aibadge .ico{width:16px;height:16px;color:var(--groen)}
+.kenm{border:1px solid var(--lijn);border-radius:8px;padding:4px 16px 6px;margin-bottom:14px}
+.kenm h3{display:flex;align-items:center;gap:8px;font-size:15px;margin:10px 0 4px;color:var(--ink)}
+.kenm h3 .ico{width:18px;height:18px;color:var(--grijs)}
+.kenm dl{margin:0;display:grid;grid-template-columns:minmax(140px,38%) 1fr;gap:0 12px}
+.kenm dt{color:var(--grijs);font-size:14px;padding:7px 0;border-top:1px solid var(--lijn)}
+.kenm dd{margin:0;font-size:14px;padding:7px 0;border-top:1px solid var(--lijn);color:var(--ink)}
+.zij{position:sticky;top:66px;display:flex;flex-direction:column;gap:14px}
+@media (max-width:900px){ .zij{position:static} }
+.scorekaart{border:1px solid var(--lijn);border-radius:8px;padding:16px 18px}
+.scorekaart .kopje{display:flex;align-items:center;gap:14px}
+.scorekaart .getal{width:64px;height:64px;border-radius:10px;background:var(--b);color:#fff;font-size:30px;font-weight:700;display:grid;place-items:center;flex:none}
+.scorekaart .getal.voorlopig{background:#fff;color:var(--b);border:2px dashed var(--b)}
+.scorekaart .band{font-weight:700;color:var(--b);font-size:16px}
+.scorekaart .sub{color:var(--grijs);font-size:13px}
+.balken{display:flex;flex-direction:column;gap:7px;margin-top:14px}
+.balk{display:grid;grid-template-columns:92px 1fr 44px;gap:8px;align-items:center;font-size:13px;color:var(--grijs)}
+.balk i{height:7px;border-radius:4px;background:var(--vlak);position:relative;display:block;overflow:hidden}
+.balk i u{position:absolute;inset:0 auto 0 0;background:var(--b);border-radius:4px}
+.balk em{font-style:normal;text-align:right;color:var(--ink);font-variant-numeric:tabular-nums}
+.balk.malus em{color:var(--rood)}
+.actiekaart{border:1px solid var(--lijn);border-radius:8px;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.actiekaart .knop{width:100%;padding:12px 14px;font-size:15px}
+.actiekaart .rij{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.actiekaart .rij .knop{padding:9px 6px;font-size:13px}
+.actiekaart .mak{text-align:center;color:var(--grijs);font-size:13px;margin-top:4px}
+.notitie{width:100%;border:1px solid #CFCFCF;border-radius:6px;padding:9px 11px;font-size:14px}
+.ligging{position:relative;border-radius:8px;overflow:hidden;aspect-ratio:3/2;background:var(--vlak)}
+.ligging img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ligging .speld{position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:#E5484D;border:3px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.3)}
+.ligging .bijschrift{position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.6);color:#fff;font-size:12px;padding:3px 8px;border-radius:4px}
+.ligging-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.voet{border-top:1px solid var(--lijn);color:var(--grijs);font-size:12.5px;padding:18px 0 26px;text-align:center}
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.lightbox img{max-width:96vw;max-height:84vh;object-fit:contain}
+.lightbox .lb-knoppen{display:flex;gap:10px;color:#fff;align-items:center}
+.lightbox button{background:rgba(255,255,255,.15);color:#fff;border:0;border-radius:6px;padding:8px 14px;cursor:pointer;font-weight:600}
+.lightbox .sluit{position:absolute;right:14px;top:14px}
 </style>
 </head>
 <body>
 <header class="top">
-  <div class="kop"><h1>Woningen</h1><span class="bij" id="bij"></span></div>
-  <nav class="tabs" role="tablist" id="tabs"></nav>
-  <div class="zoekrij" id="zoekrij" hidden>
-    <input type="search" id="zoek" placeholder="Zoek adres, plaats, makelaar" aria-label="Zoeken">
-    <select id="sorteer" aria-label="Sorteren">
-      <option value="score">Hoogste score</option>
-      <option value="nieuw">Nieuwste</option>
-      <option value="prijs">Laagste prijs</option>
-      <option value="perceel">Grootste perceel</option>
-      <option value="reis">Kortste reis</option>
-    </select>
+  <div class="wrap">
+    <a class="logo" href="#/"><span class="f">funda</span><span class="fr">Frank</span></a>
+    <nav class="nav" id="nav"></nav>
+    <div class="rechts">
+      <a href="#/zoeken/bewaard" id="bewaardlink"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.6-9.3-8.6C.9 9.3 2.6 5.5 6.4 5.5c2 0 3.3 1.1 4.1 2.2a.6.6 0 0 0 1 0c.8-1.1 2.1-2.2 4.1-2.2 3.8 0 5.5 3.8 3.7 6.9C19 16.4 12 21 12 21z"/></svg><span class="tekst">Bewaard</span><b id="bewaardtel"></b></a>
+      <a href="https://claude.ai/artifact/GMgouxGgwq11YHEJdaTmrA" target="_blank" rel="noopener" title="Dashboard van de aankoopmakelaar"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg><span class="tekst">Makelaar</span></a>
+    </div>
   </div>
 </header>
-<main id="main"><p class="leeg">Woningen laden…</p></main>
+
+<main id="main"><div class="wrap"><p class="leeg" style="margin-top:30px">Woningen laden…</p></div></main>
+
+<nav class="tabbalk" id="tabbalk"></nav>
 
 <script src="engine.js"></script>
 <script>
 (function(){
-  var DATA, CFG, H = [], S = { tab: 'nieuw', q: '', sort: 'score', n: 20 };
-  var LS = 'am-app-v1';
+  'use strict';
+  var DATA, CFG, H = [], OPID = {};
+  var LS = 'fundafrank-v1';
   function lees(){ try { return JSON.parse(localStorage.getItem(LS)) || {}; } catch(e){ return {}; } }
   function schrijf(o){ try { localStorage.setItem(LS, JSON.stringify(o)); } catch(e){} }
   var MIJN = lees(); MIJN.fb = MIJN.fb || {};
   var vorigBezoek = MIJN.bezoek || null;
 
+  /* Hulpjes */
   function el(t, c, txt){ var e = document.createElement(t); if (c) e.className = c; if (txt != null) e.textContent = txt; return e; }
+  function svg(naam, cls){ var s = document.createElementNS('http://www.w3.org/2000/svg','svg'); s.setAttribute('viewBox','0 0 24 24'); s.setAttribute('fill','none'); s.setAttribute('stroke','currentColor'); s.setAttribute('stroke-width','2'); s.setAttribute('stroke-linecap','round'); s.setAttribute('stroke-linejoin','round'); s.setAttribute('class', cls || 'ico'); s.innerHTML = ICO[naam] || ''; return s; }
+  var ICO = {
+    huis:'<path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',
+    hart:'<path d="M12 21s-7-4.6-9.3-8.6C.9 9.3 2.6 5.5 6.4 5.5c2 0 3.3 1.1 4.1 2.2a.6.6 0 0 0 1 0c.8-1.1 2.1-2.2 4.1-2.2 3.8 0 5.5 3.8 3.7 6.9C19 16.4 12 21 12 21z"/>',
+    hartvol:'<path fill="currentColor" d="M12 21s-7-4.6-9.3-8.6C.9 9.3 2.6 5.5 6.4 5.5c2 0 3.3 1.1 4.1 2.2a.6.6 0 0 0 1 0c.8-1.1 2.1-2.2 4.1-2.2 3.8 0 5.5 3.8 3.7 6.9C19 16.4 12 21 12 21z"/>',
+    zoek:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+    ster:'<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3 6.4 20.2l1.1-6.2L3 9.6l6.2-.9z"/>',
+    lijst:'<path d="M4 6h16M4 12h16M4 18h16"/>',
+    kaart:'<path d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/>',
+    m2:'<rect x="4" y="4" width="16" height="16" rx="1"/><path d="M4 9h16M9 4v16"/>',
+    bed:'<path d="M3 18v-7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v7"/><path d="M3 15h18M7 9V6h10v3"/>',
+    bliksem:'<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
+    auto:'<path d="M5 17h14l1-6-2-5H6L4 11z"/><circle cx="7.5" cy="17" r="1.5"/><circle cx="16.5" cy="17" r="1.5"/>',
+    plus:'<path d="M12 5v14M5 12h14"/>',
+    let:'<path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>',
+    vink:'<path d="m5 12 5 5L20 7"/>',
+    ai:'<path d="m12 3 1.8 4.7L18.5 9l-4.7 1.8L12 15.5l-1.8-4.7L5.5 9l4.7-1.3z"/><path d="m5 17 .8 2.2L8 20l-2.2.8L5 23l-.8-2.2L2 20l2.2-.8z"/>',
+    foto:'<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/>',
+    lucht:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+    perceel:'<path d="M4 4h16v16H4z"/><path d="M4 14l6-4 4 3 6-5"/>',
+    extern:'<path d="M14 4h6v6M20 4l-9 9"/><path d="M19 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h6"/>',
+    terug:'<path d="m15 18-6-6 6-6"/>',
+    verder:'<path d="m9 18 6-6-6-6"/>',
+    filter:'<path d="M3 5h18l-7 8v6l-4 2v-8z"/>',
+    doc:'<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
+    bouw:'<path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/>',
+    indeling:'<rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 12h18M12 12v9"/>',
+    tuin:'<path d="M12 22v-8"/><path d="M12 14c-4 0-7-3-7-7 4 0 7 3 7 7zM12 14c4 0 7-3 7-7-4 0-7 3-7 7z"/>',
+    garage:'<path d="M3 21V9l9-6 9 6v12"/><path d="M7 21v-8h10v8M7 17h10"/>',
+    overdracht:'<path d="M4 7h16M4 12h16M4 17h10"/>'
+  };
   function euro(n){ return n ? '€ ' + n.toLocaleString('nl-NL') : 'Prijs op aanvraag'; }
   function m2(n){ return n == null ? '?' : n.toLocaleString('nl-NL'); }
-  function datumNL(s){ if (!s) return ''; var d = new Date(s); return d.toLocaleDateString('nl-NL', { day:'numeric', month:'short' }) + ' ' + d.toLocaleTimeString('nl-NL', { hour:'2-digit', minute:'2-digit' }); }
-  function fb(h){ return MIJN.fb[h.id] || (h.fb ? { s: h.fb.s, n: h.fb.n || '' } : { s: '', n: '' }); }
-  function zetFb(h, o){ MIJN.fb[h.id] = Object.assign(fb(h), o, { t: Date.now() }); schrijf(MIJN); }
-
-  /* Wat is "nieuw": eerst gezien in de laatste 7 dagen. Sinds je vorige bezoek krijgt een eigen label. */
+  function datumNL(s, metTijd){ if (!s) return ''; var d = new Date(s); var t = d.toLocaleDateString('nl-NL', { day:'numeric', month:'long' }); return metTijd ? t + ', ' + d.toLocaleTimeString('nl-NL', { hour:'2-digit', minute:'2-digit' }) : t; }
+  function fb(h){ var m = MIJN.fb[h.id]; if (m) return m; return h.fb ? { s: h.fb.s === 'fav' ? 'fav' : '', n: h.fb.n || '' } : { s: '', n: '' }; }
+  function zetFb(h, o){ MIJN.fb[h.id] = Object.assign({}, fb(h), o, { t: Date.now() }); schrijf(MIJN); telBewaard(); }
   function dagenGeleden(d){ return d ? Math.round((Date.now() - Date.parse(d + 'T06:00:00')) / 86400000) : 999; }
+  function isNieuw(h){ return h.eerst && dagenGeleden(h.eerst) <= 7; }
+  function fotoUrl(id, w){ return 'https://cloud.funda.nl/valentina_media/' + id + '.jpg?options=width=' + (w || 720); }
+  function fotos(h){ return h.fotos && h.fotos.length ? h.fotos : []; }
+  function zoom(h){ return Math.max(60, Math.min(220, Math.sqrt(h.perceel || 2000) * 1.25)); }
+  function labelEl(l){ if (!l) return null; var s = el('span','lbl ' + (l[0] === 'A' ? 'A' : l[0]), l); return s; }
+  function telBewaard(){ var n = H.filter(function(h){ return fb(h).s === 'fav'; }).length; document.getElementById('bewaardtel').textContent = n ? String(n) : ''; }
 
   function verwerk(){
     var daal = {};
     (DATA.log || []).forEach(function(q){ (q.prijs || []).forEach(function(p){ if (p[2] < p[1]) daal[p[0]] = { oud: p[1], d: q.d }; }); });
-    H = DATA.huizen.map(function(h){ h._s = AM.score(h, CFG); h._daal = daal[h.id] || null; return h; });
+    H = DATA.huizen.map(function(h){ h._s = AM.score(h, CFG); h._daal = daal[h.id] || null; OPID[h.id] = h; return h; });
   }
-  function actief(h){ return h.st !== 'x' && h.st !== 'v' && fb(h).s !== 'nee'; }
-  var TABS = [
-    { id:'nieuw', naam:'Nieuw', f: function(h){ return actief(h) && dagenGeleden(h.eerst) <= 7; }, sort:'nieuw',
-      uitleg:'Nieuw op Funda in de afgelopen 7 dagen, nieuwste eerst.' },
-    { id:'top', naam:'Top', f: function(h){ return actief(h) && h.st === 'b' && !h.nb && h._s.tot >= 75; }, sort:'score',
-      uitleg:'Beschikbaar met score 75 of hoger.' },
-    { id:'bewaard', naam:'Bewaard', f: function(h){ return fb(h).s === 'fav'; }, sort:'score',
-      uitleg:'Woningen die je hebt bewaard (op dit toestel).' },
-    { id:'alles', naam:'Alles', f: function(h){ return h.st !== 'x' && fb(h).s !== 'nee'; }, sort:null,
-      uitleg:'' }
-  ];
-  var SORT = {
-    score: function(a,b){ return b._s.tot - a._s.tot; },
-    nieuw: function(a,b){ return (b.eerst || '0').localeCompare(a.eerst || '0') || b._s.tot - a._s.tot; },
-    prijs: function(a,b){ return (a.prijs || 9e9) - (b.prijs || 9e9); },
-    perceel: function(a,b){ return (b.perceel || 0) - (a.perceel || 0); },
-    reis: function(a,b){ return (a.reis == null ? 999 : a.reis) - (b.reis == null ? 999 : b.reis); }
+  function actief(h){ return h.st !== 'x' && h.st !== 'v'; }
+  var SETS = {
+    nieuw:   { naam:'Nieuw',   titel:'Nieuw deze week',       f:function(h){ return actief(h) && isNieuw(h); }, sort:'nieuw', uitleg:'Nieuw op Funda in de afgelopen 7 dagen, nieuwste eerst.' },
+    top:     { naam:'Top',     titel:'Topselectie',           f:function(h){ return h.st === 'b' && !h.nb && h._s.tot >= 75; }, sort:'score', uitleg:'Beschikbaar met score 75 of hoger.' },
+    bewaard: { naam:'Bewaard', titel:'Bewaarde woningen',     f:function(h){ return fb(h).s === 'fav'; }, sort:'score', uitleg:'Bewaard op dit toestel.' },
+    alles:   { naam:'Alles',   titel:'Koopwoningen',          f:function(h){ return h.st !== 'x'; }, sort:'score', uitleg:'' }
   };
+  var SORT = {
+    score:   function(a,b){ return b._s.tot - a._s.tot; },
+    nieuw:   function(a,b){ return (b.eerst || '0').localeCompare(a.eerst || '0') || b._s.tot - a._s.tot; },
+    prijsop: function(a,b){ return (a.prijs || 9e9) - (b.prijs || 9e9); },
+    prijsaf: function(a,b){ return (b.prijs || 0) - (a.prijs || 0); },
+    perceel: function(a,b){ return (b.perceel || 0) - (a.perceel || 0); },
+    reis:    function(a,b){ return (a.reis == null ? 999 : a.reis) - (b.reis == null ? 999 : b.reis); }
+  };
+  var F = { q:'', sort:'score', reis: 80, perceel: 1000, prijs: 1600000, score: 0, status:'b', foto:false, n: 20 };
 
-  function tabs(){
-    var nav = document.getElementById('tabs'); nav.textContent = '';
-    TABS.forEach(function(t){
-      var b = el('button','tab', t.naam); b.setAttribute('role','tab'); b.setAttribute('aria-selected', S.tab === t.id ? 'true' : 'false');
-      b.appendChild(el('b', null, String(H.filter(t.f).length)));
-      b.onclick = function(){ S.tab = t.id; S.n = 20; S.sort = t.sort || S.sort; document.getElementById('sorteer').value = S.sort; tabs(); lijst(); window.scrollTo(0,0); };
-      nav.appendChild(b);
+  /* Navigatie */
+  function nav(set){
+    var n = document.getElementById('nav'); n.textContent = '';
+    var t = document.getElementById('tabbalk'); t.textContent = '';
+    [['nieuw','Nieuw','ster'],['top','Top','huis'],['alles','Kopen','lijst'],['bewaard','Bewaard','hart']].forEach(function(x){
+      var a = el('a', set === x[0] ? 'aan' : '', x[1]); a.href = '#/zoeken/' + x[0];
+      var c = H.filter(SETS[x[0]].f).length; if (x[0] !== 'alles') a.appendChild(el('b', null, String(c)));
+      n.appendChild(a);
+      var b = el('a', set === x[0] ? 'aan' : ''); b.href = a.href; b.appendChild(svg(x[2])); b.appendChild(document.createTextNode(x[1])); t.appendChild(b);
     });
-    document.getElementById('zoekrij').hidden = S.tab !== 'alles';
+    var home = el('a', set === 'home' ? 'aan' : ''); home.href = '#/'; home.appendChild(svg('zoek')); home.appendChild(document.createTextNode('Start')); t.insertBefore(home, t.firstChild);
   }
 
-  function dia(src, alt, extra){
-    var d = el('div','dia');
-    var i = new Image(); i.alt = alt; i.loading = 'lazy'; i.decoding = 'async'; i.referrerPolicy = 'no-referrer'; i.src = src;
-    i.onerror = function(){ d.textContent = ''; d.appendChild(el('div','geenfoto','Beeld niet beschikbaar')); };
-    d.appendChild(i); if (extra) extra(d);
-    return d;
+  /* Onderdelen van kaarten */
+  function chip(h){ var s = h._s, band = AM.band(s.tot); var c = el('div','chip b-' + band + (s.voorlopig ? ' voorlopig' : '')); c.appendChild(document.createTextNode(String(Math.round(s.tot)))); c.appendChild(el('small', null, s.voorlopig ? 'voorlopig' : AM.BANDNAAM[band])); c.title = s.voorlopig ? 'Voorlopige score op basis van de zoeklijst' : 'Score volgens jouw puntensysteem'; return c; }
+  function etiketten(h){
+    var e = el('div','etiket');
+    if (isNieuw(h)) e.appendChild(el('span','nieuw', vorigBezoek && h.eerst > vorigBezoek.slice(0,10) ? 'Nieuw sinds je vorige bezoek' : 'Nieuw'));
+    if (h.st === 'o' || h.st === 'p') e.appendChild(el('span','bod', AM.STATUS[h.st]));
+    if (h.st === 'v' || h.st === 'x') e.appendChild(el('span','weg', AM.STATUS[h.st]));
+    if (h._daal) e.appendChild(el('span','daal','Prijs verlaagd'));
+    return e.children.length ? e : null;
   }
-
-  /* Uitsnede meegroeien met het perceel: halve hoogte in meters. */
-  function zoom(h){ return Math.max(60, Math.min(220, Math.sqrt(h.perceel || 2000) * 1.25)); }
-
-  function kaart(h){
-    var s = h._s, band = AM.band(s.tot), f = fb(h);
-    var art = el('article','huis' + (h.st === 'x' || h.st === 'v' ? ' weg' : ''));
-    /* Beeld: Funda-foto, dan luchtfoto met perceelgrenzen; vegen om te wisselen */
-    var beeld = el('div','beeld'), strook = el('div','strook'), dias = [];
-    var foto = AM.fotoUrl(h);
-    if (foto) dias.push(dia(foto.replace('width=228','width=720'), 'Foto van ' + h.adres, function(d){ d.appendChild(el('span','bijschrift','Funda')); }));
-    if (h.lat != null) dias.push(dia(AM.luchtfotoImg(h, 720, 480, zoom(h)), 'Luchtfoto van ' + h.adres, function(d){
-      var p = new Image(); p.alt = ''; p.loading = 'lazy'; p.src = AM.perceelImg(h, 720, 480, zoom(h)); p.onerror = function(){ p.remove(); }; d.appendChild(p);
-      d.appendChild(el('span','speld')); d.appendChild(el('span','bijschrift','Luchtfoto · perceelgrenzen'));
-    }));
-    if (!dias.length) { var g = el('div','dia'); g.appendChild(el('div','geenfoto','Geen beeld')); dias.push(g); }
-    dias.forEach(function(d){ strook.appendChild(d); });
-    beeld.appendChild(strook);
-    if (dias.length > 1) {
-      var st = el('div','stippen'); dias.forEach(function(_,k){ st.appendChild(el('i', k ? '' : 'aan')); }); beeld.appendChild(st);
-      strook.addEventListener('scroll', function(){ var k = Math.round(strook.scrollLeft / strook.clientWidth); [].forEach.call(st.children, function(x,j){ x.className = j === k ? 'aan' : ''; }); }, { passive:true });
-    }
-    var sc = el('div','score b-' + band + (s.voorlopig ? ' voorlopig' : '')); sc.appendChild(document.createTextNode(String(Math.round(s.tot))));
-    sc.appendChild(el('small', null, s.voorlopig ? 'voorlopig' : AM.BANDNAAM[band])); beeld.appendChild(sc);
-    var lint = el('div','lint');
-    if (h.eerst && dagenGeleden(h.eerst) <= 7) lint.appendChild(el('span','nieuw', vorigBezoek && h.eerst > vorigBezoek.slice(0,10) ? 'Nieuw sinds je vorige bezoek' : 'Nieuw'));
-    if (h.st !== 'b') lint.appendChild(el('span','bod', AM.STATUS[h.st]));
-    if (h._daal) lint.appendChild(el('span','daal','Prijs verlaagd'));
-    if (lint.children.length) beeld.appendChild(lint);
-    art.appendChild(beeld);
-
+  function hart(h, naRender){
+    var f = fb(h); var b = el('button','hart'); b.type = 'button'; b.setAttribute('aria-pressed', f.s === 'fav'); b.title = f.s === 'fav' ? 'Verwijderen uit bewaard' : 'Bewaren';
+    b.appendChild(svg(f.s === 'fav' ? 'hartvol' : 'hart'));
+    b.onclick = function(ev){ ev.preventDefault(); ev.stopPropagation(); zetFb(h, { s: fb(h).s === 'fav' ? '' : 'fav' }); naRender && naRender(); };
+    return b;
+  }
+  function fotoBlok(h, breed){
+    var f = el('div','foto'), lijst = fotos(h);
+    if (lijst.length) { var i = new Image(); i.alt = 'Foto van ' + h.adres; i.loading = 'lazy'; i.decoding = 'async'; i.referrerPolicy = 'no-referrer'; i.src = fotoUrl(lijst[0], breed || 720); i.onerror = function(){ i.remove(); f.appendChild(luchtImg(h)); }; f.appendChild(i); }
+    else if (h.lat != null) f.appendChild(luchtImg(h));
+    return f;
+  }
+  function luchtImg(h){
+    var w = el('div'); w.style.cssText = 'position:absolute;inset:0';
+    var a = new Image(); a.alt = 'Luchtfoto'; a.loading = 'lazy'; a.src = AM.luchtfotoImg(h, 720, 480, zoom(h)); a.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover';
+    var p = new Image(); p.alt = ''; p.loading = 'lazy'; p.src = AM.perceelImg(h, 720, 480, zoom(h)); p.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover'; p.onerror = function(){ p.remove(); };
+    w.appendChild(a); w.appendChild(p); var sp = el('span'); sp.style.cssText = 'position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:#E5484D;border:2.5px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.3)'; w.appendChild(sp);
+    var bs = el('span', null, 'Luchtfoto · perceelgrenzen'); bs.style.cssText = 'position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.6);color:#fff;font-size:11px;padding:2px 6px;border-radius:4px'; w.appendChild(bs);
+    return w;
+  }
+  function specs(h, uitgebreid){
+    var s = el('div','specs');
+    function sp(ic, txt){ var x = el('span'); x.appendChild(svg(ic)); x.appendChild(document.createTextNode(txt)); s.appendChild(x); }
+    sp('m2', m2(h.woon) + ' m² wonen'); sp('perceel', m2(h.perceel) + ' m² perceel');
+    if (h.slk) sp('bed', h.slk + ' slaapkamers');
+    if (h.label) { var x = el('span'); x.appendChild(svg('bliksem')); x.appendChild(labelEl(h.label)); s.appendChild(x); }
+    if (uitgebreid && h.reis != null) sp('auto', h.reis + ' min naar Amsterdam');
+    return s;
+  }
+  function kaartMini(h){
+    var a = el('a','bkaart'); a.href = '#/woning/' + h.id;
+    var f = fotoBlok(h, 720); f.appendChild(chip(h)); var e = etiketten(h); if (e) f.appendChild(e); f.appendChild(hart(h, function(){ a.replaceWith(kaartMini(h)); })); a.appendChild(f);
+    var inh = el('div','inh'); var pr = el('div','prijs', euro(h.prijs)); pr.appendChild(document.createTextNode(' ')); pr.appendChild(el('small', null, 'k.k.')); inh.appendChild(pr);
+    inh.appendChild(el('div','adr', h.adres)); inh.appendChild(el('div','pl', h.pc + ' ' + h.plaats));
+    inh.appendChild(el('div','spec', m2(h.woon) + ' m² · ' + m2(h.perceel) + ' m² perceel' + (h.slk ? ' · ' + h.slk + ' slk' : '') + (h.reis != null ? ' · ' + h.reis + ' min' : '')));
+    a.appendChild(inh); return a;
+  }
+  function kaartRij(h){
+    var art = el('article','rkaart');
+    var link = el('a'); link.href = '#/woning/' + h.id; link.style.cssText = 'display:block;position:relative;color:inherit';
+    var f = fotoBlok(h, 720); f.appendChild(chip(h)); var e = etiketten(h); if (e) f.appendChild(e); f.appendChild(hart(h, function(){ art.replaceWith(kaartRij(h)); })); link.appendChild(f); art.appendChild(link);
     var inh = el('div','inh');
-    var hd = el('div','hoofd'), ad = el('div','adres', h.adres); ad.appendChild(el('small', null, h.plaats + (h.reis != null ? ' · ' + h.reis + ' min naar Amsterdam' : '')));
-    var pr = el('div','prijs', euro(h.prijs)); if (h._daal) pr.appendChild(el('s', null, euro(h._daal.oud)));
-    hd.appendChild(ad); hd.appendChild(pr); inh.appendChild(hd);
-    var ft = el('div','feiten');
-    function feit(b, rest){ var sp = el('span'); sp.appendChild(el('b', null, b)); sp.appendChild(document.createTextNode(' ' + rest)); ft.appendChild(sp); }
-    feit(m2(h.perceel) + ' m²', 'perceel'); feit(m2(h.woon) + ' m²', 'wonen');
-    if (h.d && h.d.type) ft.appendChild(el('span','zacht', h.d.type));
-    if (h.label) ft.appendChild(el('span','zacht','label ' + h.label));
-    inh.appendChild(ft);
-    if (h.d && h.d.sam) inh.appendChild(el('p','sam', h.d.sam));
-    var heeftPm = h.d && ((h.d.plus && h.d.plus.length) || (h.d.vl && h.d.vl.length));
-    if (heeftPm) {
-      var pm = el('ul','pm'); pm.hidden = true;
-      (h.d.plus || []).forEach(function(p){ pm.appendChild(el('li','plus', p)); });
-      (h.d.vl || []).forEach(function(v){ pm.appendChild(el('li','min e' + v[0], v[1])); });
-      var mb = el('button','meer','Plus- en aandachtspunten (' + ((h.d.plus||[]).length + (h.d.vl||[]).length) + ')');
-      mb.onclick = function(){ pm.hidden = !pm.hidden; mb.textContent = pm.hidden ? 'Plus- en aandachtspunten' : 'Verberg punten'; };
-      inh.appendChild(mb); inh.appendChild(pm);
-    }
+    var adr = el('a','adr', h.adres); adr.href = '#/woning/' + h.id; inh.appendChild(adr);
+    inh.appendChild(el('div','pl', h.pc + ' ' + h.plaats + (h.reis != null ? ' · ' + h.reis + ' min naar Amsterdam' : '')));
+    var pr = el('div','prijs', euro(h.prijs)); pr.appendChild(document.createTextNode(' ')); pr.appendChild(el('small', null, 'k.k.')); if (h._daal) pr.appendChild(el('s', null, euro(h._daal.oud))); inh.appendChild(pr);
+    inh.appendChild(specs(h));
+    if (h.d && h.d.sam) inh.appendChild(el('p','sam', h.d.sam)); else if (h.k && h.k.soort) inh.appendChild(el('p','sam', h.k.soort + (h.k.bouwjaar ? ', bouwjaar ' + h.k.bouwjaar : '')));
+    var mak = el('div','mak'); mak.appendChild(el('span', null, h.mak || ''));
     var ac = el('div','acties');
-    function link(href, txt, cls){ var a = el('a','knop' + (cls ? ' ' + cls : ''), txt); a.href = href; a.target = '_blank'; a.rel = 'noopener'; return a; }
-    ac.appendChild(link(AM.fundaUrl(h), 'Funda', 'hoofd'));
-    ac.appendChild(link(AM.luchtfoto(h), 'Maps'));
-    if (AM.kadaster(h)) ac.appendChild(link(AM.kadaster(h), 'Kadaster')); else ac.appendChild(link(AM.route(h, CFG), 'Route'));
-    if (AM.kadaster(h)) ac.appendChild(link(AM.route(h, CFG), 'Route'));
-    inh.appendChild(ac);
-    var oo = el('div','oordeel');
-    var bw = el('button','knop', f.s === 'fav' ? '★ Bewaard' : '☆ Bewaren'); bw.setAttribute('aria-pressed', f.s === 'fav');
-    var nw = el('button','knop nee', f.s === 'nee' ? 'Afgewezen' : 'Niet voor mij'); nw.setAttribute('aria-pressed', f.s === 'nee');
-    bw.onclick = function(){ zetFb(h, { s: f.s === 'fav' ? '' : 'fav' }); tabs(); art.replaceWith(kaart(h)); };
-    nw.onclick = function(){ zetFb(h, { s: f.s === 'nee' ? '' : 'nee' }); tabs(); art.replaceWith(kaart(h)); };
-    oo.appendChild(bw); oo.appendChild(nw); inh.appendChild(oo);
-    if (f.s === 'fav' || f.n) {
-      var no = el('input','notitie'); no.placeholder = 'Notitie'; no.value = f.n || '';
-      no.onchange = function(){ zetFb(h, { n: no.value }); };
-      inh.appendChild(no);
-    }
-    art.appendChild(inh);
-    return art;
+    var fu = el('a','knop klein oranje tekstknop'); fu.href = AM.fundaUrl(h); fu.target = '_blank'; fu.rel = 'noopener'; fu.appendChild(document.createTextNode('Bekijk op Funda')); fu.appendChild(svg('extern')); ac.appendChild(fu);
+    var dt = el('a','knop klein', 'Details'); dt.href = '#/woning/' + h.id; ac.appendChild(dt);
+    mak.appendChild(ac); inh.appendChild(mak);
+    art.appendChild(inh); return art;
   }
 
-  function lijst(){
-    var main = document.getElementById('main'); main.textContent = '';
-    var t = TABS.filter(function(x){ return x.id === S.tab; })[0];
-    var set = H.filter(t.f);
-    if (S.tab === 'alles' && S.q) { var q = S.q.toLowerCase(); set = set.filter(function(h){ return (h.adres + ' ' + h.plaats + ' ' + (h.mak || '') + ' ' + h.pc).toLowerCase().indexOf(q) >= 0; }); }
-    set.sort(SORT[S.sort] || SORT.score);
-    if (t.uitleg) main.appendChild(el('p','uitleg', t.uitleg));
-    if (!set.length) {
-      main.appendChild(el('p','leeg', S.tab === 'nieuw' ? 'Geen nieuwe woningen deze week. De scan draait elke ochtend om 06:45.' : S.tab === 'bewaard' ? 'Nog niets bewaard. Tik op ☆ Bewaren bij een woning.' : 'Niets gevonden.'));
-      return;
+  /* Startpagina */
+  function home(){
+    nav('home'); document.title = 'Funda Frank';
+    var m = document.getElementById('main'); m.textContent = '';
+    var hero = el('section','hero'), w = el('div','wrap');
+    w.appendChild(el('h1', null, 'Jouw aanbod, gescoord op jouw wensen'));
+    w.appendChild(el('p', null, 'Vrijstaand en landelijk binnen een uur van Amsterdam · bijgewerkt ' + datumNL(DATA.bijgewerkt, true)));
+    var zk = el('div','zoekkaart'); var zt = el('div','ztabs');
+    [['alles','Koop'],['nieuw','Nieuw'],['top','Top'],['bewaard','Bewaard']].forEach(function(x, i){ var a = el('a', i === 0 ? 'aan' : '', x[1]); a.href = '#/zoeken/' + x[0]; zt.appendChild(a); });
+    zk.appendChild(zt);
+    var zr = el('div','zoekrij'), zv = el('div','zoekveld'), inp = el('input'); inp.type = 'search'; inp.placeholder = 'Zoek op plaats, adres of makelaar'; inp.setAttribute('aria-label','Zoeken');
+    var zb = el('button'); zb.type = 'button'; zb.appendChild(svg('zoek')); zb.setAttribute('aria-label','Zoeken');
+    function go(){ F.q = inp.value.trim(); location.hash = '#/zoeken/alles' + (F.q ? '?q=' + encodeURIComponent(F.q) : ''); }
+    zb.onclick = go; inp.onkeydown = function(ev){ if (ev.key === 'Enter') go(); };
+    zv.appendChild(inp); zv.appendChild(zb); zr.appendChild(zv);
+    var kl = el('a','kaartlink'); kl.href = '#/zoeken/top'; kl.appendChild(svg('kaart')); kl.appendChild(document.createTextNode('Topselectie')); zr.appendChild(kl);
+    zk.appendChild(zr); w.appendChild(zk); hero.appendChild(w); m.appendChild(hero);
+
+    var wrap = el('div','wrap');
+    var tg = el('div','tegels');
+    var nN = H.filter(SETS.nieuw.f).length, nT = H.filter(SETS.top.f).length, nB = H.filter(SETS.bewaard.f).length;
+    [['#/zoeken/nieuw','ster', nN + ' nieuw deze week', 'Nieuw op Funda, nieuwste eerst'],['#/zoeken/top','huis', nT + ' in je topselectie', 'Score 75 of hoger, beschikbaar'],['#/zoeken/bewaard','hart', nB + ' bewaard', 'Jouw eigen lijst']].forEach(function(x){
+      var a = el('a','tegel'); a.href = x[0]; a.appendChild(svg(x[1])); var t = el('div', null, x[2]); t.appendChild(el('small', null, x[3])); a.appendChild(t); tg.appendChild(a);
+    });
+    wrap.appendChild(tg);
+
+    function sectie(titel, sub, set, max){
+      if (!set.length) return;
+      var h2 = el('h2','sectie', titel); if (sub) h2.appendChild(el('small', null, sub)); wrap.appendChild(h2);
+      var g = el('div','beeldgrid'); set.slice(0, max).forEach(function(h){ g.appendChild(kaartMini(h)); }); wrap.appendChild(g);
     }
-    set.slice(0, S.n).forEach(function(h){ main.appendChild(kaart(h)); });
-    if (set.length > S.n) { var m = el('button','knop laadmeer','Toon meer (' + (set.length - S.n) + ')'); m.onclick = function(){ S.n += 20; lijst(); }; main.appendChild(m); }
-    main.appendChild(el('p','voet', 'Scores volgens jouw puntensysteem · data bijgewerkt ' + datumNL(DATA.bijgewerkt)));
+    var nieuw = H.filter(SETS.nieuw.f).sort(SORT.nieuw);
+    sectie('Woning in beeld', 'nieuwste eerst', nieuw, 3);
+    sectie('Hoogste scores', 'beschikbaar', H.filter(SETS.top.f).sort(SORT.score), 6);
+    var verlaagd = H.filter(function(h){ return actief(h) && h._daal; }).sort(SORT.score);
+    sectie('Prijs verlaagd', '', verlaagd, 3);
+    wrap.appendChild(voet()); m.appendChild(wrap);
+  }
+  function voet(){ var v = el('div','voet', 'Funda Frank · persoonlijke selectie van de aankoopmakelaar · scores volgens jouw puntensysteem · data van Funda, luchtfoto’s en percelen van PDOK/Kadaster · bijgewerkt ' + datumNL(DATA.bijgewerkt, true)); return v; }
+
+  /* Zoekresultaten */
+  function zoeken(naam, params){
+    var set = naam, S = SETS[naam] || SETS.alles; nav(naam); document.title = S.titel + ' · Funda Frank';
+    if (params.q != null) F.q = params.q;
+    F.sort = S.sort; F.n = 20;
+    var m = document.getElementById('main'); m.textContent = '';
+    var wrap = el('div','wrap'), grid = el('div','resultaten'), zijk = el('aside','filters'), inh = el('div');
+    zijk.appendChild(el('h3', null, 'Filters'));
+    function blok(){ var b = el('div','blok'); zijk.appendChild(b); return b; }
+    var b0 = blok(); var zi = el('input'); zi.type = 'search'; zi.placeholder = 'Plaats, adres of makelaar'; zi.value = F.q; zi.oninput = function(){ F.q = zi.value; F.n = 20; lijst(); }; b0.appendChild(zi);
+    var b1 = blok(); b1.appendChild(el('h3', null, 'Status'));
+    var kz = el('div','keuze'); [['b','Beschikbaar'],['bod','Ook onder bod of optie'],['alles','Alles, ook verkocht o.v.']].forEach(function(x){ var l = el('label'); var r = el('input'); r.type = 'radio'; r.name = 'st'; r.value = x[0]; r.checked = F.status === x[0]; r.onchange = function(){ F.status = x[0]; lijst(); }; l.appendChild(r); l.appendChild(document.createTextNode(x[1])); kz.appendChild(l); });
+    var lf = el('label'); var cf = el('input'); cf.type = 'checkbox'; cf.checked = F.foto; cf.onchange = function(){ F.foto = cf.checked; lijst(); }; lf.appendChild(cf); lf.appendChild(document.createTextNode('Alleen met foto’s')); kz.appendChild(lf);
+    b1.appendChild(kz);
+    function schuif(b, tekst, key, min, max, step, fmt){
+      var l = el('label'); var bb = el('b'); l.appendChild(document.createTextNode(tekst + ' ')); l.appendChild(bb);
+      var r = el('input'); r.type = 'range'; r.min = min; r.max = max; r.step = step; r.value = F[key];
+      function toon(){ bb.textContent = fmt(Number(r.value)); }
+      r.oninput = function(){ F[key] = Number(r.value); toon(); F.n = 20; lijst(); }; toon(); l.appendChild(r); b.appendChild(l);
+    }
+    var b2 = blok(); b2.appendChild(el('h3', null, 'Grenzen'));
+    schuif(b2, 'Vraagprijs tot', 'prijs', 800000, 1600000, 25000, function(v){ return euro(v); });
+    schuif(b2, 'Perceel vanaf', 'perceel', 1000, 6000, 250, function(v){ return m2(v) + ' m²'; });
+    schuif(b2, 'Reistijd tot', 'reis', 20, 80, 5, function(v){ return v + ' min'; });
+    schuif(b2, 'Score vanaf', 'score', 0, 90, 5, function(v){ return v + ' punten'; });
+    grid.appendChild(zijk);
+    var kop = el('div','lijstkop'), h1 = el('h1', null, S.titel), tel = el('small'); h1.appendChild(tel); kop.appendChild(h1);
+    var rechts = el('div'); rechts.style.cssText = 'display:flex;gap:10px;align-items:center';
+    var fk = el('button','filterknop'); fk.type = 'button'; fk.appendChild(svg('filter')); fk.appendChild(document.createTextNode('Filters')); fk.onclick = function(){ zijk.classList.toggle('open'); }; rechts.appendChild(fk);
+    var so = el('div','sorteer'); so.appendChild(document.createTextNode('Sorteer')); var sel = el('select');
+    [['score','Hoogste score'],['nieuw','Nieuwste eerst'],['prijsop','Prijs oplopend'],['prijsaf','Prijs aflopend'],['perceel','Grootste perceel'],['reis','Kortste reistijd']].forEach(function(x){ var o = el('option', null, x[1]); o.value = x[0]; sel.appendChild(o); });
+    sel.value = F.sort; sel.onchange = function(){ F.sort = sel.value; lijst(); }; so.appendChild(sel); rechts.appendChild(so); kop.appendChild(rechts);
+    inh.appendChild(kop);
+    if (S.uitleg) inh.appendChild(el('p','uitleg', S.uitleg));
+    var lijstEl = el('div','lijst'); inh.appendChild(lijstEl);
+    function lijst(){
+      lijstEl.textContent = '';
+      var set = H.filter(S.f);
+      if (naam !== 'bewaard') {
+        if (F.status === 'b') set = set.filter(function(h){ return h.st === 'b'; });
+        else if (F.status === 'bod') set = set.filter(function(h){ return h.st !== 'v' && h.st !== 'x'; });
+      }
+      set = set.filter(function(h){ return (h.prijs || 0) <= F.prijs && (h.perceel || 0) >= F.perceel && (h.reis == null || h.reis <= F.reis) && h._s.tot >= F.score && (!F.foto || fotos(h).length); });
+      if (F.q) { var q = F.q.toLowerCase(); set = set.filter(function(h){ return (h.adres + ' ' + h.plaats + ' ' + (h.mak || '') + ' ' + h.pc).toLowerCase().indexOf(q) >= 0; }); }
+      set.sort(SORT[F.sort] || SORT.score);
+      tel.textContent = set.length + ' woning' + (set.length === 1 ? '' : 'en');
+      if (!set.length) { lijstEl.appendChild(el('p','leeg', naam === 'bewaard' ? 'Nog niets bewaard. Tik op het hartje bij een woning.' : 'Geen woningen binnen deze filters.')); return; }
+      set.slice(0, F.n).forEach(function(h){ lijstEl.appendChild(kaartRij(h)); });
+      if (set.length > F.n) { var mb = el('button','knop meer', 'Toon meer (' + (set.length - F.n) + ')'); mb.type = 'button'; mb.onclick = function(){ F.n += 20; lijst(); }; lijstEl.appendChild(mb); }
+    }
+    if (set === 'bewaard') { F.status = 'alles'; } else if (F.status === 'alles' && set !== 'alles') F.status = 'b';
+    lijst();
+    grid.appendChild(inh); wrap.appendChild(grid); wrap.appendChild(voet()); m.appendChild(wrap);
+    window.scrollTo(0, 0);
   }
 
-  document.getElementById('zoek').addEventListener('input', function(e){ S.q = e.target.value; S.n = 20; lijst(); });
-  document.getElementById('sorteer').addEventListener('change', function(e){ S.sort = e.target.value; lijst(); });
+  /* Detailpagina */
+  var DEEL = [['reis','Reistijd'],['perceel','Perceel'],['prijs','Prijs'],['ligging','Ligging'],['type','Vrijstaand'],['woning','Woning'],['bij','Bijgebouwen']];
+  function woning(id){
+    var h = OPID[id]; if (!h) { location.hash = '#/'; return; }
+    nav(''); document.title = h.adres + ', ' + h.plaats + ' · Funda Frank';
+    var m = document.getElementById('main'); m.textContent = '';
+    var wrap = el('div','wrap');
+    var kr = el('nav','kruimel'); var kh = el('a'); kh.href = '#/'; kh.appendChild(svg('huis')); kr.appendChild(kh); kr.appendChild(document.createTextNode('/'));
+    var kz = el('a', null, isNieuw(h) ? 'Nieuw' : 'Kopen'); kz.href = isNieuw(h) ? '#/zoeken/nieuw' : '#/zoeken/alles'; kr.appendChild(kz); kr.appendChild(document.createTextNode('/'));
+    kr.appendChild(el('span', null, h.plaats)); kr.appendChild(document.createTextNode('/')); kr.appendChild(el('span', null, h.adres)); wrap.appendChild(kr);
+
+    /* Galerij: foto's + luchtfoto als laatste tegel */
+    var lijstF = fotos(h), gw = el('div','galerij-wrap'), g = el('div','galerij');
+    var tegels = lijstF.slice(0, 4).map(function(fid, i){ return { src: fotoUrl(fid, i === 0 ? 1440 : 720), groot: fotoUrl(fid, 1440) }; });
+    var alle = lijstF.map(function(fid){ return fotoUrl(fid, 1440); });
+    function tegel(t, idx){
+      var b = el('button','g'); b.type = 'button';
+      var i = new Image(); i.alt = 'Foto ' + (idx + 1) + ' van ' + h.adres; i.referrerPolicy = 'no-referrer'; i.src = t.src; i.loading = idx ? 'lazy' : 'eager'; b.appendChild(i);
+      b.onclick = function(){ lightbox(alle, idx); }; return b;
+    }
+    tegels.forEach(function(t, i){ g.appendChild(tegel(t, i)); });
+    if (h.lat != null) {
+      var lb = el('div','g lucht'); var la = new Image(); la.alt = 'Luchtfoto'; la.src = AM.luchtfotoImg(h, 720, 480, zoom(h)); lb.appendChild(la);
+      var lp = new Image(); lp.alt = ''; lp.className = 'ov'; lp.src = AM.perceelImg(h, 720, 480, zoom(h)); lp.onerror = function(){ lp.remove(); }; lb.appendChild(lp); lb.appendChild(el('span','speld')); lb.appendChild(el('span','bijschrift','Luchtfoto · perceel'));
+      lb.onclick = function(){ document.getElementById('ligging').scrollIntoView({ behavior:'smooth' }); }; g.appendChild(lb);
+    }
+    while (g.children.length < 5 && g.children.length > 0 && window.innerWidth > 720) { var leeg = el('div','g'); leeg.style.background = '#EEE'; g.appendChild(leeg); }
+    if (lijstF.length > 4 && g.children[3]) { var mf = el('div','meerfotos', '+' + (lijstF.length - 4) + ' foto’s'); g.children[3].appendChild(mf); }
+    if (!lijstF.length && h.lat == null) g.appendChild(el('div','leeg','Geen beeld beschikbaar'));
+    gw.appendChild(g);
+    var kb = el('div','knopbalk'); var bw = el('button','knop'); bw.type = 'button'; function tekenBw(){ var f = fb(h); bw.textContent = ''; bw.appendChild(svg(f.s === 'fav' ? 'hartvol' : 'hart')); bw.appendChild(document.createTextNode(f.s === 'fav' ? 'Bewaard' : 'Bewaren')); bw.setAttribute('aria-pressed', f.s === 'fav'); }
+    tekenBw(); bw.onclick = function(){ zetFb(h, { s: fb(h).s === 'fav' ? '' : 'fav' }); tekenBw(); tekenBw2 && tekenBw2(); }; kb.appendChild(bw); gw.appendChild(kb);
+    wrap.appendChild(gw);
+
+    var mb = el('div','mediabalk');
+    function mitem(ic, txt, fn, href){ var a = href ? el('a') : el('button'); if (href) { a.href = href; a.target = '_blank'; a.rel = 'noopener'; } else { a.type = 'button'; a.onclick = fn; } a.appendChild(svg(ic)); a.appendChild(document.createTextNode(txt)); mb.appendChild(a); }
+    if (lijstF.length) mitem('foto', 'Foto’s ' + lijstF.length, function(){ lightbox(alle, 0); });
+    mitem('lucht', 'Luchtfoto', function(){ document.getElementById('ligging').scrollIntoView({ behavior:'smooth' }); });
+    if (AM.kadaster(h)) mitem('perceel', 'Kadaster', null, AM.kadaster(h));
+    mitem('kaart', 'Google Maps', null, AM.luchtfoto(h));
+    mitem('extern', 'Alle media op Funda', null, AM.fundaUrl(h));
+    wrap.appendChild(mb);
+
+    var det = el('div','detail'), links = el('div'), zij = el('aside','zij');
+    links.appendChild(el('h1', null, h.adres));
+    links.appendChild(el('div','pl', h.pc + ' ' + h.plaats + (h.reis != null ? ' · ' + h.reis + ' min naar Amsterdam-Zuid' : '')));
+    var pr = el('div','prijs', euro(h.prijs)); pr.appendChild(document.createTextNode(' ')); pr.appendChild(el('small', null, 'k.k.')); if (h._daal) pr.appendChild(el('s', null, euro(h._daal.oud))); links.appendChild(pr);
+    links.appendChild(specs(h, true));
+    var d = h.d || {};
+    if (d.sam) links.appendChild(el('div','infobox', d.sam));
+    else if (h.k && h.k.soort) links.appendChild(el('div','infobox', h.k.soort + (h.k.bouwjaar ? ' uit ' + h.k.bouwjaar : '') + ' · nog niet inhoudelijk beoordeeld door de aankoopmakelaar'));
+    else links.appendChild(el('div','infobox', 'Nog niet inhoudelijk beoordeeld; de score is voorlopig en gebaseerd op prijs, perceel, woonoppervlak en reistijd.'));
+
+    if ((d.plus && d.plus.length) || (d.vl && d.vl.length)) {
+      links.appendChild(el('h2', null, 'Dit huis in het kort'));
+      var ab = el('div','aibadge'); ab.appendChild(svg('ai')); ab.appendChild(document.createTextNode('Beoordeeld door de aankoopmakelaar op ' + datumNL(d.dat))); links.appendChild(ab);
+      var ul = el('ul','kort');
+      (d.plus || []).forEach(function(p){ var li = el('li','plus'); var ik = el('div','ik'); ik.appendChild(svg('vink')); li.appendChild(ik); var t = el('div'); t.appendChild(el('b', null, p)); li.appendChild(t); ul.appendChild(li); });
+      (d.vl || []).forEach(function(v){ var li = el('li','min e' + v[0]); var ik = el('div','ik'); ik.appendChild(svg('let')); li.appendChild(ik); var t = el('div'); t.appendChild(el('b', null, v[1])); t.appendChild(el('span', null, v[0] === 3 ? 'Waarschijnlijk een dealbreaker' : v[0] === 2 ? 'Serieus aandachtspunt' : 'Licht aandachtspunt')); li.appendChild(t); ul.appendChild(li); });
+      links.appendChild(ul);
+    }
+
+    /* Kenmerken zoals op Funda */
+    var k = h.k || {};
+    function kenm(titel, ic, rijen){
+      var r = rijen.filter(function(x){ return x[1]; }); if (!r.length) return;
+      var box = el('section','kenm'); var h3 = el('h3'); h3.appendChild(svg(ic)); h3.appendChild(document.createTextNode(titel)); box.appendChild(h3);
+      var dl = el('dl'); r.forEach(function(x){ dl.appendChild(el('dt', null, x[0])); dl.appendChild(el('dd', null, x[1])); }); box.appendChild(dl); links.appendChild(box);
+    }
+    links.appendChild(el('h2', null, 'Kenmerken'));
+    kenm('Overdracht', 'overdracht', [['Vraagprijs', euro(h.prijs) + ' kosten koper'], ['Vraagprijs per m²', h.prijs && h.woon ? '€ ' + Math.round(h.prijs / h.woon).toLocaleString('nl-NL') : ''], ['Aangeboden sinds', k.sinds || (d.sinds ? datumNL(d.sinds) : '') || (h.eerst ? datumNL(h.eerst) + ' (eerst gezien)' : '')], ['Status', AM.STATUS[h.st]], ['Aanvaarding', k.aanvaarding], ['Bijdrage VvE', k.vve], ['Eigendomssituatie', k.eigendom]]);
+    kenm('Bouw', 'bouw', [['Soort woonhuis', k.soort || d.type], ['Soort bouw', k.bouw], ['Bouwjaar', k.bouwjaar || (d.bj ? String(d.bj) : '')], ['Soort dak', k.dak]]);
+    kenm('Oppervlakten en inhoud', 'm2', [['Wonen', k.wonen || m2(h.woon) + ' m²'], ['Overige inpandige ruimte', k.overig], ['Gebouwgebonden buitenruimte', k.buiten], ['Externe bergruimte', k.externe], ['Perceel', k.perceel || m2(h.perceel) + ' m²'], ['Kadastraal perceel', h.kadm2 ? m2(h.kadm2) + ' m² (' + h.kad.replace(/\//g,' ') + ')' : ''], ['Inhoud', k.inhoud || (d.inh ? m2(d.inh) + ' m³' : '')]]);
+    kenm('Indeling', 'indeling', [['Aantal kamers', k.kamers || (h.slk ? h.slk + ' slaapkamers' : '')], ['Aantal badkamers', k.badkamers], ['Aantal woonlagen', k.woonlagen]]);
+    kenm('Energie', 'bliksem', [['Energielabel', k.label || h.label], ['Isolatie', k.isolatie], ['Verwarming', k.verwarming], ['Warm water', k.warmwater], ['Cv-ketel', k.cv]]);
+    kenm('Buitenruimte', 'tuin', [['Ligging', k.ligging], ['Tuin', k.tuin], ['Achtertuin', k.achtertuin], ['Ligging tuin', k.tuinligging], ['Schuur/berging', k.schuur]]);
+    kenm('Garage en parkeren', 'garage', [['Soort garage', k.garage], ['Parkeergelegenheid', k.parkeren]]);
+    if (!Object.keys(k).length) links.appendChild(el('p','uitleg', 'De volledige kenmerkenlijst wordt opgehaald zodra deze woning door de aankoopmakelaar is gelezen (score 70 of hoger).'));
+
+    /* Ligging */
+    var lg = el('h2', null, 'Ligging'); lg.id = 'ligging'; links.appendChild(lg);
+    if (h.lat != null) {
+      var li = el('div','ligging'); var la2 = new Image(); la2.alt = 'Luchtfoto van ' + h.adres; la2.src = AM.luchtfotoImg(h, 1200, 800, zoom(h) * 1.4); li.appendChild(la2);
+      var lp2 = new Image(); lp2.alt = ''; lp2.src = AM.perceelImg(h, 1200, 800, zoom(h) * 1.4); lp2.onerror = function(){ lp2.remove(); }; li.appendChild(lp2); li.appendChild(el('span','speld')); li.appendChild(el('span','bijschrift','Actuele luchtfoto met kadastrale perceelgrenzen (PDOK)')); links.appendChild(li);
+      var ll = el('div','ligging-links');
+      function lk(txt, href, ic){ var a = el('a','knop'); a.href = href; a.target = '_blank'; a.rel = 'noopener'; a.appendChild(svg(ic)); a.appendChild(document.createTextNode(txt)); ll.appendChild(a); }
+      lk('Google Maps satelliet', AM.luchtfoto(h), 'kaart'); if (AM.kadaster(h)) lk('Kadastrale kaart', AM.kadaster(h), 'perceel'); lk('Route naar Amsterdam', AM.route(h, CFG), 'auto');
+      links.appendChild(ll);
+      links.appendChild(el('p','uitleg', 'Reistijd ' + (h.reis != null ? h.reis + ' minuten' : 'onbekend') + ' naar Amsterdam-Zuid zonder file (OSRM). Kadastrale maat kan afwijken van Funda als de grond uit meerdere percelen bestaat.'));
+    }
+    det.appendChild(links);
+
+    /* Zijkolom: score en acties */
+    var s = h._s, band = AM.band(s.tot);
+    var sk = el('div','scorekaart b-' + band); var kopje = el('div','kopje'); kopje.appendChild(el('div','getal' + (s.voorlopig ? ' voorlopig' : ''), String(Math.round(s.tot))));
+    var kt = el('div'); kt.appendChild(el('div','band', s.voorlopig ? 'Voorlopige score' : AM.BANDNAAM[band])); kt.appendChild(el('div','sub', s.voorlopig ? 'Op basis van de zoeklijst, nog niet beoordeeld' : 'Score volgens jouw puntensysteem (max 100)')); kopje.appendChild(kt); sk.appendChild(kopje);
+    var bk = el('div','balken');
+    DEEL.forEach(function(dd){ var b = el('div','balk'); b.appendChild(el('span', null, dd[1])); var i = el('i'); var u = el('u'); u.style.width = Math.round(100 * s.delen[dd[0]] / CFG.gewicht[dd[0]]) + '%'; i.appendChild(u); b.appendChild(i); b.appendChild(el('em', null, s.delen[dd[0]].toLocaleString('nl-NL') + '/' + CFG.gewicht[dd[0]])); bk.appendChild(b); });
+    if (s.malus.vlaggen) { var b1 = el('div','balk malus'); b1.appendChild(el('span', null, 'Aandachtspunten')); b1.appendChild(el('i')); b1.appendChild(el('em', null, '−' + s.malus.vlaggen)); bk.appendChild(b1); }
+    if (s.malus.zuidwest) { var b2 = el('div','balk malus'); b2.appendChild(el('span', null, 'Richting Rotterdam')); b2.appendChild(el('i')); b2.appendChild(el('em', null, '−' + s.malus.zuidwest)); bk.appendChild(b2); }
+    sk.appendChild(bk); zij.appendChild(sk);
+
+    var ak = el('div','actiekaart');
+    var fu = el('a','knop oranje'); fu.href = AM.fundaUrl(h); fu.target = '_blank'; fu.rel = 'noopener'; fu.appendChild(document.createTextNode('Bekijk op Funda')); fu.appendChild(svg('extern')); ak.appendChild(fu);
+    var bw2 = el('button','knop'); bw2.type = 'button'; var tekenBw2 = function(){ var f = fb(h); bw2.textContent = ''; bw2.appendChild(svg(f.s === 'fav' ? 'hartvol' : 'hart')); bw2.appendChild(document.createTextNode(f.s === 'fav' ? 'Bewaard' : 'Bewaren')); bw2.setAttribute('aria-pressed', f.s === 'fav'); no.hidden = !(fb(h).s === 'fav' || fb(h).n); };
+    var no = el('input','notitie'); no.placeholder = 'Eigen notitie'; no.value = fb(h).n || ''; no.onchange = function(){ zetFb(h, { n: no.value }); };
+    bw2.onclick = function(){ zetFb(h, { s: fb(h).s === 'fav' ? '' : 'fav' }); tekenBw2(); tekenBw(); }; ak.appendChild(bw2); ak.appendChild(no); tekenBw2();
+    var rij = el('div','rij');
+    function rk(txt, href, ic){ var a = el('a','knop'); a.href = href; a.target = '_blank'; a.rel = 'noopener'; a.appendChild(svg(ic)); a.appendChild(document.createTextNode(txt)); rij.appendChild(a); }
+    rk('Maps', AM.luchtfoto(h), 'kaart'); if (AM.kadaster(h)) rk('Kadaster', AM.kadaster(h), 'perceel'); rk('Route', AM.route(h, CFG), 'auto');
+    ak.appendChild(rij);
+    if (h.mak) ak.appendChild(el('div','mak', h.mak));
+    zij.appendChild(ak);
+    if (window.matchMedia('(max-width:900px)').matches) { zij.className = 'zij'; links.insertBefore(zij, links.querySelector('h2') || null); if (!links.querySelector('h2')) links.appendChild(zij); }
+    else det.appendChild(zij);
+    wrap.appendChild(det);
+
+    /* Vorige / volgende binnen de topselectie */
+    wrap.appendChild(voet()); m.appendChild(wrap); window.scrollTo(0, 0);
+  }
+
+  function lightbox(lijst, idx){
+    if (!lijst.length) return;
+    var lb = el('div','lightbox'); var img = new Image(); img.referrerPolicy = 'no-referrer'; var tel = el('span');
+    function toon(){ img.src = lijst[idx]; tel.textContent = (idx + 1) + ' / ' + lijst.length; }
+    var kn = el('div','lb-knoppen'); var vorige = el('button', null, '‹ Vorige'); var volgende = el('button', null, 'Volgende ›');
+    vorige.onclick = function(){ idx = (idx - 1 + lijst.length) % lijst.length; toon(); }; volgende.onclick = function(){ idx = (idx + 1) % lijst.length; toon(); };
+    kn.appendChild(vorige); kn.appendChild(tel); kn.appendChild(volgende);
+    var sl = el('button','sluit', 'Sluiten ×'); sl.onclick = function(){ lb.remove(); document.removeEventListener('keydown', key); };
+    function key(ev){ if (ev.key === 'Escape') sl.onclick(); if (ev.key === 'ArrowLeft') vorige.onclick(); if (ev.key === 'ArrowRight') volgende.onclick(); }
+    document.addEventListener('keydown', key);
+    lb.onclick = function(ev){ if (ev.target === lb) sl.onclick(); };
+    lb.appendChild(img); lb.appendChild(kn); lb.appendChild(sl); document.body.appendChild(lb); toon();
+  }
+
+  /* Router */
+  function route(){
+    var hash = location.hash || '#/'; var deel = hash.slice(2).split('?'); var pad = deel[0].split('/'); var params = {};
+    (deel[1] || '').split('&').forEach(function(p){ if (!p) return; var kv = p.split('='); params[decodeURIComponent(kv[0])] = decodeURIComponent(kv[1] || ''); });
+    if (pad[0] === 'woning' && pad[1]) woning(pad[1]);
+    else if (pad[0] === 'zoeken') zoeken(pad[1] || 'alles', params);
+    else home();
+  }
+  window.addEventListener('hashchange', route);
 
   fetch('data.json', { cache: 'no-cache' }).then(function(r){ return r.json(); }).then(function(d){
-    DATA = d; CFG = d.cfg; verwerk();
-    document.getElementById('bij').textContent = 'bijgewerkt ' + datumNL(d.bijgewerkt);
-    if (!H.filter(TABS[0].f).length) S.tab = 'top';
-    S.sort = TABS.filter(function(x){ return x.id === S.tab; })[0].sort;
-    tabs(); lijst();
+    DATA = d; CFG = d.cfg; verwerk(); telBewaard(); route();
     MIJN.bezoek = new Date().toISOString(); schrijf(MIJN);
-  }).catch(function(){ document.getElementById('main').innerHTML = '<p class="leeg">Kon de woningdata niet laden. Controleer je verbinding en probeer opnieuw.</p>'; });
+  }).catch(function(){ document.getElementById('main').innerHTML = '<div class="wrap"><p class="leeg" style="margin-top:30px">Kon de woningdata niet laden. Controleer je verbinding en probeer opnieuw.</p></div>'; });
 
   if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(function(){});
 })();
