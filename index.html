@@ -105,6 +105,22 @@ h2.sectie small{font-size:14px;font-weight:400;color:var(--grijs);margin-left:10
 .etiket .bod{background:#FFF1DB;color:#8A4510}
 .etiket .daal{background:#DFF3E6;color:var(--top)}
 .etiket .weg{background:#444;color:#fff}
+.etiket .azc{display:inline-flex;align-items:center;gap:4px}
+.etiket .azc.rood{background:#D0021B;color:#fff}
+.etiket .azc.oranje{background:#F39200;color:#fff}
+.etiket .azc .ico{width:12px;height:12px}
+.azcbox{border:1px solid var(--lijn);border-radius:8px;padding:14px 16px;margin-bottom:14px}
+.azcbox .kopregel{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--ink)}
+.azcbox .stip{width:12px;height:12px;border-radius:50%;background:var(--groen);flex:none}
+.azcbox .stip.rood{background:#D0021B} .azcbox .stip.oranje{background:#F39200}
+.azcbox ul{margin:10px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px;font-size:14px}
+.azcbox li{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--lijn);padding-top:6px}
+.azcbox li span{color:var(--grijs)}
+.azcbox li b{white-space:nowrap}
+.hero .usp{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 10px;margin:0 0 18px;padding:0;list-style:none;font-size:13px;color:var(--grijs)}
+.hero .usp li{display:flex;align-items:center;gap:5px}
+.hero .usp .ico{width:14px;height:14px;color:var(--or)}
+.tegel .azcsub{color:#D0021B}
 
 /* Zoekresultaten */
 .resultaten{display:grid;grid-template-columns:270px minmax(0,1fr);gap:26px;padding:22px 0 40px;align-items:start}
@@ -332,7 +348,7 @@ h2.sectie small{font-size:14px;font-weight:400;color:var(--grijs);margin-left:10
     perceel: function(a,b){ return (b.perceel || 0) - (a.perceel || 0); },
     reis:    function(a,b){ return (a.reis == null ? 999 : a.reis) - (b.reis == null ? 999 : b.reis); }
   };
-  var F = { q:'', sort:'score', reis: 80, perceel: 1000, prijs: 1600000, score: 0, status:'b', foto:false, n: 20 };
+  var F = { q:'', sort:'score', reis: 80, perceel: 1000, prijs: 1600000, score: 0, status:'b', foto:false, geenAzc:false, n: 20 };
 
   /* Navigatie */
   function nav(set){
@@ -355,6 +371,7 @@ h2.sectie small{font-size:14px;font-weight:400;color:var(--grijs);margin-left:10
     if (h.st === 'o' || h.st === 'p') e.appendChild(el('span','bod', AM.STATUS[h.st]));
     if (h.st === 'v' || h.st === 'x') e.appendChild(el('span','weg', AM.STATUS[h.st]));
     if (h._daal) e.appendChild(el('span','daal','Prijs verlaagd'));
+    var ak = AM.azcKleur(h, CFG); if (ak) { var az = el('span','azc ' + ak); az.appendChild(svg('let')); az.appendChild(document.createTextNode('AZC ' + h.azc.km.toLocaleString('nl-NL') + ' km' + (h.azc.st === 'gepland' ? ' (gepland)' : ''))); az.title = h.azc.naam; e.appendChild(az); }
     return e.children.length ? e : null;
   }
   function hart(h, naRender){
@@ -417,8 +434,11 @@ h2.sectie small{font-size:14px;font-weight:400;color:var(--grijs);margin-left:10
     nav('home'); document.title = 'Funda Frank';
     var m = document.getElementById('main'); m.textContent = '';
     var hero = el('section','hero'), w = el('div','wrap');
-    w.appendChild(el('h1', null, 'Jouw aanbod, gescoord op jouw wensen'));
-    w.appendChild(el('p', null, 'Vrijstaand en landelijk binnen een uur van Amsterdam · bijgewerkt ' + datumNL(DATA.bijgewerkt, true)));
+    w.appendChild(el('h1', null, 'Funda, maar dan met alles wat je echt wilt weten'));
+    w.appendChild(el('p', null, 'Het Funda-aanbod vrijstaand en landelijk binnen een uur van Amsterdam, elke ochtend bijgewerkt en gescoord op jouw wensen.'));
+    var usp = el('ul','usp');
+    [['ster','Score per woning'],['perceel','Kadastrale perceelgrenzen'],['lucht','Actuele luchtfoto'],['let','AZC-indicator'],['kaart','Maps en route'],['vink','Plus- en aandachtspunten']].forEach(function(x){ var li = el('li'); li.appendChild(svg(x[0])); li.appendChild(document.createTextNode(x[1])); usp.appendChild(li); });
+    w.appendChild(usp);
     var zk = el('div','zoekkaart'); var zt = el('div','ztabs');
     [['alles','Koop'],['nieuw','Nieuw'],['top','Top'],['bewaard','Bewaard']].forEach(function(x, i){ var a = el('a', i === 0 ? 'aan' : '', x[1]); a.href = '#/zoeken/' + x[0]; zt.appendChild(a); });
     zk.appendChild(zt);
@@ -428,13 +448,15 @@ h2.sectie small{font-size:14px;font-weight:400;color:var(--grijs);margin-left:10
     zb.onclick = go; inp.onkeydown = function(ev){ if (ev.key === 'Enter') go(); };
     zv.appendChild(inp); zv.appendChild(zb); zr.appendChild(zv);
     var kl = el('a','kaartlink'); kl.href = '#/zoeken/top'; kl.appendChild(svg('kaart')); kl.appendChild(document.createTextNode('Topselectie')); zr.appendChild(kl);
-    zk.appendChild(zr); w.appendChild(zk); hero.appendChild(w); m.appendChild(hero);
+    zk.appendChild(zr); w.appendChild(zk); var bij = el('p', null, 'Bijgewerkt ' + datumNL(DATA.bijgewerkt, true) + ' · ' + H.filter(actief).length + ' woningen gevolgd'); bij.style.marginTop = '12px'; w.appendChild(bij); hero.appendChild(w); m.appendChild(hero);
 
     var wrap = el('div','wrap');
     var tg = el('div','tegels');
     var nN = H.filter(SETS.nieuw.f).length, nT = H.filter(SETS.top.f).length, nB = H.filter(SETS.bewaard.f).length;
-    [['#/zoeken/nieuw','ster', nN + ' nieuw deze week', 'Nieuw op Funda, nieuwste eerst'],['#/zoeken/top','huis', nT + ' in je topselectie', 'Score 75 of hoger, beschikbaar'],['#/zoeken/bewaard','hart', nB + ' bewaard', 'Jouw eigen lijst']].forEach(function(x){
-      var a = el('a','tegel'); a.href = x[0]; a.appendChild(svg(x[1])); var t = el('div', null, x[2]); t.appendChild(el('small', null, x[3])); a.appendChild(t); tg.appendChild(a);
+    function azcTel(set){ return set.filter(function(h){ return AM.azcKleur(h, CFG); }).length; }
+    var aN = azcTel(H.filter(SETS.nieuw.f)), aT = azcTel(H.filter(SETS.top.f));
+    [['#/zoeken/nieuw','ster', nN + ' nieuw deze week', 'Nieuw op Funda, nieuwste eerst', aN],['#/zoeken/top','huis', nT + ' in je topselectie', 'Score 75 of hoger, beschikbaar', aT],['#/zoeken/bewaard','hart', nB + ' bewaard', 'Jouw eigen lijst', null]].forEach(function(x){
+      var a = el('a','tegel'); a.href = x[0]; a.appendChild(svg(x[1])); var t = el('div', null, x[2]); var sm = el('small', null, x[3]); if (x[4]) { sm.appendChild(document.createTextNode(' · ')); sm.appendChild(el('span','azcsub', x[4] + ' met opvang binnen 6 km')); } t.appendChild(sm); a.appendChild(t); tg.appendChild(a);
     });
     wrap.appendChild(tg);
 
@@ -465,6 +487,7 @@ h2.sectie small{font-size:14px;font-weight:400;color:var(--grijs);margin-left:10
     var b1 = blok(); b1.appendChild(el('h3', null, 'Status'));
     var kz = el('div','keuze'); [['b','Beschikbaar'],['bod','Ook onder bod of optie'],['alles','Alles, ook verkocht o.v.']].forEach(function(x){ var l = el('label'); var r = el('input'); r.type = 'radio'; r.name = 'st'; r.value = x[0]; r.checked = F.status === x[0]; r.onchange = function(){ F.status = x[0]; lijst(); }; l.appendChild(r); l.appendChild(document.createTextNode(x[1])); kz.appendChild(l); });
     var lf = el('label'); var cf = el('input'); cf.type = 'checkbox'; cf.checked = F.foto; cf.onchange = function(){ F.foto = cf.checked; lijst(); }; lf.appendChild(cf); lf.appendChild(document.createTextNode('Alleen met foto’s')); kz.appendChild(lf);
+    var la = el('label'); var ca = el('input'); ca.type = 'checkbox'; ca.checked = F.geenAzc; ca.onchange = function(){ F.geenAzc = ca.checked; lijst(); }; la.appendChild(ca); la.appendChild(document.createTextNode('Geen opvang binnen 6 km')); kz.appendChild(la);
     b1.appendChild(kz);
     function schuif(b, tekst, key, min, max, step, fmt){
       var l = el('label'); var bb = el('b'); l.appendChild(document.createTextNode(tekst + ' ')); l.appendChild(bb);
@@ -494,7 +517,7 @@ h2.sectie small{font-size:14px;font-weight:400;color:var(--grijs);margin-left:10
         if (F.status === 'b') set = set.filter(function(h){ return h.st === 'b'; });
         else if (F.status === 'bod') set = set.filter(function(h){ return h.st !== 'v' && h.st !== 'x'; });
       }
-      set = set.filter(function(h){ return (h.prijs || 0) <= F.prijs && (h.perceel || 0) >= F.perceel && (h.reis == null || h.reis <= F.reis) && h._s.tot >= F.score && (!F.foto || fotos(h).length); });
+      set = set.filter(function(h){ return (h.prijs || 0) <= F.prijs && (h.perceel || 0) >= F.perceel && (h.reis == null || h.reis <= F.reis) && h._s.tot >= F.score && (!F.foto || fotos(h).length) && (!F.geenAzc || !AM.azcKleur(h, CFG)); });
       if (F.q) { var q = F.q.toLowerCase(); set = set.filter(function(h){ return (h.adres + ' ' + h.plaats + ' ' + (h.mak || '') + ' ' + h.pc).toLowerCase().indexOf(q) >= 0; }); }
       set.sort(SORT[F.sort] || SORT.score);
       tel.textContent = set.length + ' woning' + (set.length === 1 ? '' : 'en');
@@ -587,6 +610,15 @@ h2.sectie small{font-size:14px;font-weight:400;color:var(--grijs);margin-left:10
     kenm('Garage en parkeren', 'garage', [['Soort garage', k.garage], ['Parkeergelegenheid', k.parkeren]]);
     if (!Object.keys(k).length) links.appendChild(el('p','uitleg', 'De volledige kenmerkenlijst wordt opgehaald zodra deze woning door de aankoopmakelaar is gelezen (score 70 of hoger).'));
 
+    /* Opvang in de buurt */
+    var nab = AM.azcNabij(h, DATA.azc, 10), ak2 = AM.azcKleur(h, CFG);
+    links.appendChild(el('h2', null, 'Asielopvang in de buurt'));
+    var ab2 = el('div','azcbox'); var kr2 = el('div','kopregel'); kr2.appendChild(el('span','stip ' + ak2));
+    kr2.appendChild(document.createTextNode(!nab.length ? 'Geen opvanglocatie bekend binnen 10 km' : ak2 === 'rood' ? 'Opvang binnen 3 km: ' + nab[0].l.naam + ' (' + nab[0].km.toFixed(1).replace('.', ',') + ' km)' : ak2 === 'oranje' ? 'Opvang binnen 6 km: ' + nab[0].l.naam + ' (' + nab[0].km.toFixed(1).replace('.', ',') + ' km)' : 'Dichtstbijzijnde opvang op ' + nab[0].km.toFixed(1).replace('.', ',') + ' km'));
+    ab2.appendChild(kr2);
+    if (nab.length) { var ul2 = el('ul'); nab.slice(0, 6).forEach(function(x){ var li = el('li'); var t = el('div', null, x.l.naam); t.appendChild(el('span', null, ' · ' + x.l.soort + (x.l.bez ? ' · ' + x.l.bez + ' plekken' : '') + (x.l.st === 'gepland' ? ' · gepland ' + x.l.jaar : ''))); li.appendChild(t); li.appendChild(el('b', null, x.km.toFixed(1).replace('.', ',') + ' km')); ul2.appendChild(li); }); ab2.appendChild(ul2); }
+    ab2.appendChild(el('p','uitleg', 'Bron: COA-overzicht opvanglocaties (Rijksoverheid, augustus 2025) plus bekende geplande locaties. Hemelsbreed. Noodopvang en opvangschepen tellen mee.'));
+    links.appendChild(ab2);
     /* Ligging */
     var lg = el('h2', null, 'Ligging'); lg.id = 'ligging'; links.appendChild(lg);
     if (h.lat != null) {
@@ -607,6 +639,7 @@ h2.sectie small{font-size:14px;font-weight:400;color:var(--grijs);margin-left:10
     var bk = el('div','balken');
     DEEL.forEach(function(dd){ var b = el('div','balk'); b.appendChild(el('span', null, dd[1])); var i = el('i'); var u = el('u'); u.style.width = Math.round(100 * s.delen[dd[0]] / CFG.gewicht[dd[0]]) + '%'; i.appendChild(u); b.appendChild(i); b.appendChild(el('em', null, s.delen[dd[0]].toLocaleString('nl-NL') + '/' + CFG.gewicht[dd[0]])); bk.appendChild(b); });
     if (s.malus.vlaggen) { var b1 = el('div','balk malus'); b1.appendChild(el('span', null, 'Aandachtspunten')); b1.appendChild(el('i')); b1.appendChild(el('em', null, '−' + s.malus.vlaggen)); bk.appendChild(b1); }
+    if (h.azc && AM.azcKleur(h, CFG) && !(d.vl && d.vl.some(function(v){ return /azc|opvang|asiel/i.test(v[1]); }))) { var b3 = el('div','balk malus'); b3.appendChild(el('span', null, 'Opvang nabij')); b3.appendChild(el('i')); b3.appendChild(el('em', null, '−' + ((CFG.azc && CFG.azc.malusRood) || 5))); bk.appendChild(b3); }
     if (s.malus.zuidwest) { var b2 = el('div','balk malus'); b2.appendChild(el('span', null, 'Richting Rotterdam')); b2.appendChild(el('i')); b2.appendChild(el('em', null, '−' + s.malus.zuidwest)); bk.appendChild(b2); }
     sk.appendChild(bk); zij.appendChild(sk);
 

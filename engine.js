@@ -44,6 +44,10 @@
     delen.bij = g.bij * ((d && d.bij != null) ? Math.min(2, d.bij) / 2 : 0.5);
     var mv = 0;
     if (d && d.vl) for (var i = 0; i < d.vl.length; i++) mv += cfg.vlagPunten[d.vl[i][0]] || 0;
+    if (h.azc && h.azc.km != null && !(d && d.vl && d.vl.some(function (v) { return /azc|opvang|asiel/i.test(v[1]); }))) {
+      var az = cfg.azc || { rood: 3, oranje: 6, malusRood: 5, malusOranje: 2 };
+      if (h.azc.km <= az.rood) mv += az.malusRood; else if (h.azc.km <= az.oranje) mv += az.malusOranje;
+    }
     mv = Math.min(cfg.vlagMax, mv);
     var mz = AM.zuidwest(h, cfg);
     var som = 0, kk;
@@ -125,6 +129,13 @@
     return uit;
   };
 
+  /* Afstand in km (grote-cirkel) en opvang in de buurt. */
+  AM.km = function (a, b) { var R = 6371, dl = (b.lat - a.lat) * Math.PI / 180, dn = (b.lon - a.lon) * Math.PI / 180, x = Math.sin(dl / 2), y = Math.sin(dn / 2) * Math.cos(a.lat * Math.PI / 180) * Math.cos(b.lat * Math.PI / 180); return 2 * R * Math.asin(Math.sqrt(x * x + y * y)); };
+  AM.azcNabij = function (h, lijst, maxKm) {
+    if (h.lat == null || !lijst) return [];
+    return lijst.map(function (l) { return { l: l, km: AM.km(h, l) }; }).filter(function (x) { return x.km <= (maxKm || 10); }).sort(function (a, b) { return a.km - b.km; });
+  };
+  AM.azcKleur = function (h, cfg) { var az = (cfg && cfg.azc) || { rood: 3, oranje: 6 }; if (!h.azc || h.azc.km == null) return ''; return h.azc.km <= az.rood ? 'rood' : h.azc.km <= az.oranje ? 'oranje' : ''; };
   AM.dagen = function (a, b) { return Math.round((Date.parse(b) - Date.parse(a)) / 86400000); };
 
   if (typeof module !== 'undefined' && module.exports) module.exports = AM;
